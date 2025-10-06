@@ -1,0 +1,23 @@
+.logo {
+    --logo-primary: var(--main);
+    --logo-secondary: var(--text);
+
+    display: inline-flex;
+    align-items: baseline;
+    line-height: 1;
+    font-size: 20px;
+    font-family: var(--font-sans);
+    letter-spacing: 0;
+    gap: 0;
+}
+
+.partA {
+    color: var(--logo-primary);
+    font-weight: 700;
+}
+
+.partB {
+    color: var(--logo-secondary);
+    font-weight: 800;
+}
+
