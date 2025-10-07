@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "@/components/Header/Header";
-import Container from "@/components/Container/Container";
 import { Inter } from "next/font/google";
+import Providers from "@/components/Provider/ReactQueryProvider";
 
 const inter = Inter({
    subsets: ["latin"],
@@ -54,7 +54,7 @@ export default function RootLayout({
       <body className={inter.variable}>
         <Header />
         <main>
-          <Container>{children}</Container>
+          <Providers>{children}</Providers>
         </main>
       </body>
     </html>

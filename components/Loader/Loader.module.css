@@ -1,0 +1,68 @@
+.screen {
+    display: grid;
+    place-items: center;
+    gap: 12px;
+    min-block-size: 120px;
+    /* запобігає "стрибкам" у маленьких контейнерах */
+    padding: 16px;
+    text-align: center;
+    color: var(--main);
+    background: transparent;
+    /* лишає фон батьківського елемента */
+}
+
+/* Спінер: підтримка кастомного розміру через --loader-size */
+.spinner {
+    --_size: var(--loader-size, 40px);
+    inline-size: var(--_size);
+    block-size: var(--_size);
+
+    border-radius: 50%;
+    border: 3px solid var(--gray-light);
+    border-top-color: var(--button);
+    /* акцент згідно теми */
+    animation: loader-spin 0.9s linear infinite;
+
+    /* Для чіткості на ретина-дисплеях */
+    box-sizing: border-box;
+}
+
+/* Підпис під спінером */
+.message {
+    margin: 0;
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-weight: var(--fw-medium);
+    font-size: 0.9375rem;
+    /* ~15px */
+    line-height: 1.35;
+}
+
+/* Прихований текст для скрінрідерів */
+.srOnly {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Анімації */
+@keyframes loader-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Зменшення руху для користувачів з prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .spinner {
+        animation: none;
+        /* Легка пульсація тіні як статичний індикатор (без руху) */
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.04);
+    }
+}

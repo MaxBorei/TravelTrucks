@@ -1,0 +1,256 @@
+/* ============ LAYOUT ============ */
+.catalog {
+    display: flex;
+    align-items: flex-start;
+    gap: 64px;
+    padding: 48px 0 52px;
+}
+
+/* ============ SIDEBAR ============ */
+.filters {
+    width: 360px;
+        
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        background: var(--white);
+}
+
+.filterBlock {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.filterLabel {
+    font-weight: var(--fw-semibold);
+    font-size: 16px;
+    color: var(--main);
+}
+
+.filterTitle {
+    font-weight: var(--fw-semibold);
+    font-size: 18px;
+    color: var(--main);
+    margin-bottom: 8px;
+}
+
+/* ============ LOCATION ============ */
+.locationField {
+    width: 360px;
+    height: 56px;
+    box-sizing: border-box;
+    padding-left: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--inputs);
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+}
+
+.locationIcon {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    color: var(--gray);
+}
+
+.locationInput {
+    flex: 1 1 auto;
+    min-width: 0;
+    border: 0;
+    outline: none;
+    background: transparent;
+    color: var(--main);
+    font: inherit;
+}
+
+.locationInput::placeholder {
+    color: var(--gray);
+}
+
+
+.filterInput {
+    width: 100%;
+    height: 56px;
+    padding: 0 16px;
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    font-size: 16px;
+    color: var(--main);
+    background: var(--inputs);
+}
+
+.filterInput::placeholder {
+    color: var(--gray);
+}
+
+/* ============ FILTER BUTTONS ============ */
+.filterOptions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filterBtn {
+    width: calc((100% - 24px) / 3);
+    height: 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    background: var(--white);
+    font-size: 16px;
+    color: var(--main);
+    transition: border-color 0.2s ease;
+    cursor: pointer;
+}
+
+.activeFilter {
+    border-color: var(--button);
+    
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    color: var(--main);
+    fill: none;
+    stroke: currentColor;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+
+/* ===== SEARCH BUTTON ===== */
+.searchBtn {
+    width: 166px;
+    height: 56px;
+    margin-top: 16px;
+    align-self: center;
+
+    background: var(--button);
+    border: none;
+    border-radius: 200px;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: var(--fw-semibold);
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.searchBtn:hover {
+    background: var(--button-hover);
+}
+
+/* ============ CARDS  ============ */
+.cards {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    /* одна колонка */
+    gap: 24px;
+}
+
+.card {
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: flex;
+    gap: 24px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 20px;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+}
+
+.image {
+    width: 292px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.cardContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardTitle {
+    font-size: 20px;
+    font-weight: var(--fw-semibold);
+    color: var(--main);
+}
+
+.cardPrice {
+    font-size: 20px;
+    font-weight: var(--fw-semibold);
+    color: var(--button);
+}
+
+.cardLocation {
+    font-size: 14px;
+    color: var(--text);
+}
+
+.cardDescription {
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.5;
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+
+.cardFeatures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.cardFeatures li {
+    background: var(--badges);
+    color: var(--main);
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+.showMore {
+    width: 166px;
+    height: 56px;
+    background: var(--button);
+    color: var(--white);
+    border: none;
+    border-radius: 200px;
+    font-weight: var(--fw-semibold);
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    align-self: flex-start;
+}
+
+.showMore:hover {
+    background: var(--button-hover);
+}

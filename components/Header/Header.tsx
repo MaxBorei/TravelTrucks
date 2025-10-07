@@ -1,32 +1,29 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import clsx from "clsx";
-
 import Container from "../Container/Container";
 import Logo from "../Logo/Logo";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import css from "./Header.module.css";
 
 export default function Header() {
-  const pathname = usePathname();
-  const isActive = (href: string) =>
-    pathname === href || (href !== "/" && pathname.startsWith(href));
+  const pathname = usePathname(); 
 
   return (
     <header className={css.header}>
-      <Container className={css.inner}>
-        <div className={css.brand}>
-          <Logo />
+      <Container>
+        <div className={css.inner}>
+          <div className={css.logo}>
+            <Logo />
+          </div>
         </div>
 
-        <nav aria-label="Main navigation">
+        <nav>
           <ul className={css.navigation}>
             <li>
               <Link
                 href="/"
-                className={clsx(css.link, isActive("/") && css.active)}
-                aria-current={isActive("/") ? "page" : undefined}
+                className={`${css.link} ${pathname === "/" ? css.active : ""}`}
               >
                 Home
               </Link>
@@ -34,8 +31,7 @@ export default function Header() {
             <li>
               <Link
                 href="/catalog"
-                className={clsx(css.link, isActive("/catalog") && css.active)}
-                aria-current={isActive("/catalog") ? "page" : undefined}
+                className={`${css.link} ${pathname === "/catalog" ? css.active : ""}`}
               >
                 Catalog
               </Link>

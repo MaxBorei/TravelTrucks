@@ -7,14 +7,12 @@ export default function Hero() {
     <section className={css.hero}>
       <Image
         src="/Picture.jpg"
-        alt="Camper van near the lake at sunset"
-        fill
-        priority
-        sizes="100vw"
+        alt="Camper van at sunset"
+        width={1440}
+        height={696}
         className={css.image}
+        priority
       />
-
-      <div className={css.overlay}></div>
 
       <div className={css.content}>
         <h1 className={css.title}>Campers of your dreams</h1>
