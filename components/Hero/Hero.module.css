@@ -19,23 +19,24 @@
     top: 50%;
     left: 64px;
     transform: translateY(-50%);
-    color: #fff;
     z-index: 2;
-    max-width: 600px;
+    max-width: 696px;
 }
 
 .title {
-    font-size: clamp(32px, 5vw, 48px);
-    /* адаптивний розмір */
-    font-weight: 700;
+    font-size: 48px;
+    font-weight: var(--fw-semibold);
     margin-bottom: 16px;
-    line-height: 1.2;
+    line-height: 1.33;
+    color: var(--inputs);
 }
 
 .subtitle {
-    font-size: clamp(16px, 2vw, 18px);
-    margin-bottom: 32px;
-    color: #e0e0e0;
+    font-size: 24px;
+    font-weight: var(--fw-semibold);
+    margin-bottom: 40px;
+    line-height: 1.33;
+    color: var(--inputs);
 }
 
 .button {
@@ -43,11 +44,12 @@
     font-size: 16px;
     background-color: var(--button);
     color: white;
-    font-weight: 600;
+    font-weight: var(--fw-medium);
     padding: 16px 48px;
     border-radius: 200px;
     text-decoration: none;
     transition: background-color 0.3s;
+    line-height: 1.5;
 }
 
 .button:hover {

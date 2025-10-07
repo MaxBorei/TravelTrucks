@@ -1,13 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchCampers } from "./campersApi";
 import css from "./Catalog.module.css";
 import Image from "next/image";
 import Container from "../Container/Container";
 import Loader from "../Loader/Loader";
-import ErrorPage from "../ErrorPage/ErrorPage"
+import ErrorPage from "../ErrorPage/ErrorPage";
 
 interface Camper {
   id: string;
@@ -30,76 +30,104 @@ interface Camper {
   gallery: { thumb: string; original: string }[];
 }
 
+type FiltersState = {
+  location: string;
+  filters: string[];            // equipment multi
+  transmission: string | null;  // single
+  engine: string | null;        // single
+  vehicleType: string | null;   // single
+};
+
+const emptyFilters: FiltersState = {
+  location: "",
+  filters: [],
+  transmission: null,
+  engine: null,
+  vehicleType: null,
+};
+
 export default function Catalog() {
+  // Дані
   const { data: campers = [], isLoading, isError } = useQuery({
     queryKey: ["campers"],
     queryFn: fetchCampers,
   });
 
+  // 1) СТЕЙДЖИНГ (те, що користувач клікає в UI)
   const [location, setLocation] = useState("");
   const [filters, setFilters] = useState<string[]>([]);
   const [transmission, setTransmission] = useState<string | null>(null);
   const [engine, setEngine] = useState<string | null>(null);
   const [vehicleType, setVehicleType] = useState<string | null>(null);
 
-  // multi-filter toggle (equipment)
+  // 2) ЗАСТОСОВАНІ ФІЛЬТРИ (лише після Search)
+  const [applied, setApplied] = useState<FiltersState>(emptyFilters);
+
+  // === Handlers для стейджингу ===
   const toggleFilter = (feature: string) => {
     setFilters((prev) =>
-      prev.includes(feature)
-        ? prev.filter((f) => f !== feature)
-        : [...prev, feature]
+      prev.includes(feature) ? prev.filter((f) => f !== feature) : [...prev, feature]
     );
   };
-
-  // single-select filters
   const handleTransmission = (type: string) => {
     setTransmission((prev) => (prev === type ? null : type));
   };
-
   const handleEngine = (type: string) => {
     setEngine((prev) => (prev === type ? null : type));
   };
-
   const handleVehicleType = (type: string) => {
     setVehicleType((prev) => (prev === type ? null : type));
   };
 
-  // filtering logic
-  const filteredCampers = campers.filter((camper: Camper) => {
-    const matchLocation =
-      !location ||
-      camper.location.toLowerCase().includes(location.toLowerCase());
+  // === Search: застосувати те, що у стейджингу ===
+  const handleSearch = () => {
+    setApplied({
+      location,
+      filters,
+      transmission,
+      engine,
+      vehicleType,
+    });
+  };
 
-    const matchTransmission = transmission
-      ? camper.transmission.toLowerCase() === transmission
-      : true;
+  // (опційно) Reset: очистити все і застосувати порожні фільтри
+  const handleReset = () => {
+    setLocation("");
+    setFilters([]);
+    setTransmission(null);
+    setEngine(null);
+    setVehicleType(null);
+    setApplied(emptyFilters);
+  };
 
-    const matchEngine = engine
-      ? camper.engine.toLowerCase() === engine
-      : true;
+  // 3) Фільтрація — лише з applied
+  const filteredCampers = useMemo(() => {
+    const loc = applied.location.trim().toLowerCase();
+    const t = applied.transmission?.toLowerCase() ?? null;
+    const e = applied.engine?.toLowerCase() ?? null;
+    const vt = applied.vehicleType ?? null;
 
-    const matchVehicleType = vehicleType
-      ? camper.form === vehicleType
-      : true;
+    return campers.filter((camper: Camper) => {
+      const matchLocation = !loc || camper.location.toLowerCase().includes(loc);
+      const matchTransmission = t ? camper.transmission.toLowerCase() === t : true;
+      const matchEngine = e ? camper.engine.toLowerCase() === e : true;
+      const matchVehicleType = vt ? camper.form === vt : true;
+      const matchEquipment = applied.filters.every(
+        (f) => camper[f as keyof Camper] === true
+      );
 
-    const matchEquipment = filters.every(
-      (f) => camper[f as keyof Camper] === true
-    );
+      return (
+        matchLocation &&
+        matchTransmission &&
+        matchEngine &&
+        matchVehicleType &&
+        matchEquipment
+      );
+    });
+  }, [campers, applied]);
 
-    return (
-      matchLocation &&
-      matchTransmission &&
-      matchEngine &&
-      matchVehicleType &&
-      matchEquipment
-    );
-  });
-
-  if (isLoading)
-    return <Loader/>;
-
-  if (isError)
-    return <ErrorPage/>;
+  if (isLoading) return <Loader />;
+  if (isError) return <ErrorPage />;
 
   return (
     <Container>
@@ -107,23 +135,23 @@ export default function Catalog() {
         {/* === SIDEBAR FILTERS === */}
         <aside className={css.filters}>
           {/* Location */}
-<div className={css.filterBlock}>
-  <label className={css.filterLabel}>Location</label>
+          <div className={css.filterBlock}>
+            <label className={css.filterLabel}>Location</label>
 
-  <div className={css.locationField}>
-    <svg className={css.locationIcon} aria-hidden="true">
-      <use href="/sprite.svg#icon-Map" />
-    </svg>
+            <div className={css.locationField}>
+              <svg className={css.locationIcon} aria-hidden="true">
+                <use href="/sprite.svg#icon-Map" />
+              </svg>
 
-    <input
-      type="text"
-      placeholder="City"
-      value={location}
-      onChange={(e) => setLocation(e.target.value)}
-      className={css.locationInput}
-    />
-  </div>
-</div>
+              <input
+                type="text"
+                placeholder="City"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className={css.locationInput}
+              />
+            </div>
+          </div>
 
           {/* Vehicle equipment */}
           <div className={css.filterBlock}>
@@ -140,6 +168,7 @@ export default function Catalog() {
                 { key: "water", label: "Water", icon: "icon-ion_water-outline" },
               ].map(({ key, label, icon }) => (
                 <button
+                  type="button"
                   key={key}
                   onClick={() => toggleFilter(key)}
                   className={`${css.filterBtn} ${filters.includes(key) ? css.activeFilter : ""}`}
@@ -162,6 +191,7 @@ export default function Catalog() {
                 { key: "manual", label: "Manual", icon: "icon-diagram" },
               ].map(({ key, label, icon }) => (
                 <button
+                  type="button"
                   key={key}
                   onClick={() => handleTransmission(key)}
                   className={`${css.filterBtn} ${transmission === key ? css.activeFilter : ""}`}
@@ -184,6 +214,7 @@ export default function Catalog() {
                 { key: "petrol", label: "Petrol", icon: "icon-petrol" },
               ].map(({ key, label, icon }) => (
                 <button
+                  type="button"
                   key={key}
                   onClick={() => handleEngine(key)}
                   className={`${css.filterBtn} ${engine === key ? css.activeFilter : ""}`}
@@ -201,13 +232,13 @@ export default function Catalog() {
           <div className={css.filterBlock}>
             <h4 className={css.filterTitle}>Vehicle type</h4>
             <div className={css.filterOptions}>
-                {[
+              {[
                 { key: "panelTruck", label: "Van", icon: "icon-bi_grid-1x2" },
                 { key: "fullyIntegrated", label: "Fully Integrated", icon: "icon-bi_grid" },
-                
                 { key: "alcove", label: "Alcove", icon: "icon-bi_grid-3x3-gap" },
               ].map(({ key, label, icon }) => (
                 <button
+                  type="button"
                   key={key}
                   onClick={() => handleVehicleType(key)}
                   className={`${css.filterBtn} ${vehicleType === key ? css.activeFilter : ""}`}
@@ -221,7 +252,15 @@ export default function Catalog() {
             </div>
           </div>
 
-          <button className={css.searchBtn}>Search</button>
+          {/* Apply / Reset */}
+          <div className={css.actions}>
+            <button type="button" className={css.searchBtn} onClick={handleSearch}>
+              Search
+            </button>
+            <button type="button" className={css.resetBtn} onClick={handleReset}>
+              Reset
+            </button>
+          </div>
         </aside>
 
         {/* === CAMPER CARDS === */}
