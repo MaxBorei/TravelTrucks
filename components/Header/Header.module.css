@@ -3,9 +3,7 @@
     z-index: 50;
     background: var(--inputs);
     padding: 24px 0;
-    
 }
-
 
 .inner {
     display: flex;
@@ -19,7 +17,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    gap: 32px;
+    gap: 24px;
     list-style: none;
     margin: 0;
     padding: 0;

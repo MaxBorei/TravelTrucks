@@ -1,0 +1,4 @@
+.screen {
+    height: calc(100dvh - 73px);
+    overflow: hidden;
+}

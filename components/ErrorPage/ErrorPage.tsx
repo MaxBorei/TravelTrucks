@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { MdHome, MdRefresh } from "react-icons/md";
 import { useRouter } from "next/navigation";
-import Logo from "@/components/Logo/Logo";        // ← твій компонент лого (текст)
+import Logo from "@/components/Logo/Logo";        
 import css from "./ErrorPage.module.css";
 
 type ErrorViewProps = {

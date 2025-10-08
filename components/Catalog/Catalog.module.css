@@ -51,9 +51,6 @@
 }
 
 .locationIcon {
-    width: 20px;
-    height: 20px;
-    flex: 0 0 20px;
     color: var(--gray);
 }
 
@@ -119,18 +116,13 @@
     width: 32px;
     height: 32px;
     color: var(--main);
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    fill: currentColor;
 }
 
 /* ===== ACTION BUTTONS (Search + Reset) ===== */
 .actions {
     display: flex;
     gap: 10px;
-    /* між кнопками */
     justify-content: center;
 }
 
@@ -139,7 +131,6 @@
     width: 166px;
     height: 56px;
     align-self: center;
-
     background: var(--button);
     border: none;
     border-radius: 200px;
@@ -196,6 +187,8 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    gap: 24px;
+    min-width: 0;
     justify-content: space-between;
 }
 
@@ -203,16 +196,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+    margin-bottom: 8px;
 }
 
 .cardTitle {
     font-family: var(--font-family);
-    font-weight: 600;
+    font-weight: var(--fw-semibold);
     font-size: 24px;
     line-height: 1.33;
     color: var(--main);
-    font-weight: var(--fw-semibold);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cardPrice {
@@ -221,6 +216,43 @@
     font-size: 24px;
     line-height: 1.33;
     color: var(--main);
+}
+
+/* ---- Рейтинг + локація ---- */
+.rating_location_container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ratingWrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--main);
+}
+
+.starIcon {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+}
+
+.ratingText {
+    font-size: 14px;
+    font-weight: var(--fw-medium);
+    line-height: 1.4;
+    color: var(--main);
+}
+
+.muted {
+    color: var(--text);
+}
+
+.locationWrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .cardLocation {
@@ -232,23 +264,40 @@
     font-size: 14px;
     color: var(--text);
     line-height: 1.5;
-    margin-top: 8px;
-    margin-bottom: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .cardFeatures {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 4px;
 }
 
-.cardFeatures li {
+/* Пігулки із SVG (не чіпаємо обгортки) */
+.featurePill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
     background: var(--badges);
     color: var(--main);
-    font-size: 12px;
-    padding: 6px 10px;
-    border-radius: 6px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: var(--fw-medium);
+    line-height: 1.5;
+}
+
+.featureIcon {
+    width: 22px;
+    height: 22px;
+    color: var(--main);
+    fill: currentColor;
+    /* stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round; */
 }
 
 .showMore {
@@ -267,4 +316,45 @@
 
 .showMore:hover {
     background: var(--button-hover);
+}
+
+/* ===== PRICE + FAVORITE ===== */
+.priceWrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.favBtn {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 4px;
+    line-height: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--gray);
+    transition: color .2s ease, transform .06s ease;
+}
+
+.favBtn:hover {
+    transform: scale(1.05);
+}
+
+.favBtn:active {
+    transform: translateY(1px);
+}
+
+.favIcon {
+    width: 28px;
+    height: 24px;
+    fill: currentColor;
+    transition: fill .2s ease, stroke .2s ease, color .2s ease;
+}
+
+.favIconActive {
+    color: var(--button);
+    fill: currentColor;
 }
