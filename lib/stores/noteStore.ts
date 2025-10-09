@@ -1,52 +1,17 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
-/** Доменні типи */
-export type Transmission = "automatic" | "manual";
-export type Engine = "diesel" | "petrol"| 'hybrid';
-export type Form = "panelTruck" | "fullyIntegrated" | "alcove";
-export type Review = {
-  reviewer_name: string;
-  reviewer_rating: number;
-  comment?: string;
-};
-
-/** Ключі обладнання, якими ми індексуємо Camper */
-export type EquipmentKey =
-  | "AC"
-  | "bathroom"
-  | "kitchen"
-  | "TV"
-  | "refrigerator"
-  | "microwave"
-  | "gas"
-  | "water";
-
-/** Мапа прапорців обладнання */
-type EquipmentFlags = Record<EquipmentKey, boolean>;
-
-/** Базові поля кемпера */
-interface CamperBase {
-  id: string;
-  name: string;
-  price: number;
-  rating?: number;
-  location: string;
-  description: string;
-  transmission: Transmission;
-  engine: Engine;
-  form: Form;
-    gallery: { thumb: string; original: string }[];
-    reviews?: Review[];
-    
-}
-
-/** Повний тип кемпера = базові поля + прапорці обладнання */
-export type Camper = CamperBase & EquipmentFlags;
+import type {
+  Transmission,
+  Engine,
+  Form,
+  EquipmentKey,
+  Camper,
+} from "@/types/types";
 
 export type FiltersState = {
   location: string;
-  filters: EquipmentKey[];         // multi-select обладнання
+  filters: EquipmentKey[];         
   transmission: Transmission | null;
   engine: Engine | null;
   vehicleType: Form | null;
@@ -137,14 +102,16 @@ export const useNoteStore = create<Store>()(
         })),
 
       applyFilters: () => set((s) => ({ filtersApplied: { ...s.filtersDraft } })),
-      resetFilters: () => set(() => ({
-        filtersDraft: { ...emptyFilters },
-        filtersApplied: { ...emptyFilters },
-      })),
+      resetFilters: () =>
+        set(() => ({
+          filtersDraft: { ...emptyFilters },
+          filtersApplied: { ...emptyFilters },
+        })),
 
       /** Обрані */
       favorites: {},
-      addFavorite: (id) => set((s) => ({ favorites: { ...s.favorites, [id]: true } })),
+      addFavorite: (id) =>
+        set((s) => ({ favorites: { ...s.favorites, [id]: true } })),
       removeFavorite: (id) =>
         set((s) => {
           const next = { ...s.favorites };
@@ -167,16 +134,13 @@ export const useNoteStore = create<Store>()(
         const vt = f.vehicleType ?? null;
 
         return campers.filter((c) => {
-          const matchLocation =
-            !loc || c.location.toLowerCase().includes(loc);
-
+          const matchLocation = !loc || c.location.toLowerCase().includes(loc);
           const matchTransmission = t ? c.transmission === t : true;
           const matchEngine = e ? c.engine === e : true;
           const matchVehicleType = vt ? c.form === vt : true;
 
-          // ✅ без any: індексуємо по суворо типізованих ключах обладнання
           const matchEquipment = f.filters.every(
-            (key: EquipmentKey) => c[key] === true
+            (key: EquipmentKey) => (c as Record<EquipmentKey, boolean>)[key] === true
           );
 
           return (
