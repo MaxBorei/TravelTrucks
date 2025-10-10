@@ -1,8 +1,49 @@
+TravelTrucks — Camper Rentals (Next.js)
+
+A camper catalog with filters, pagination, and URL-synced state.
+Filtering/sorting/pagination are handled on the backend (Next Route Handler). The frontend uses React Query + Axios, and global state is managed with Zustand (with persist).
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+
+Tech stack
+
+Next.js (app router)
+
+TypeScript (no any)
+
+Zustand (+ persist) — global state (filters, favorites)
+
+@tanstack/react-query — data/cache/refetch
+
+Axios — requests to /api
+
+CSS Modules — component styles
+
+Next Image — images
 
 ## Getting Started
 
 First, run the development server:
+
+Features
+
+Filters: location, equipment, transmission, engine, vehicleType
+
+Server-side pagination + Show more button (lazy-load 4 cards per click)
+
+URL sync for draft filters (?page=&location=&filters=AC,kitchen…)
+
+Apply filters via Search button (triggers backend request)
+
+Reset — clears filters and URL
+
+Favorites (local, via Zustand persist)
+
+Universal <Button /> component with primary | outline variants
+
+Refresh resilience: applied filters and favorites are preserved
+
+No jump-to-top on filter clicks (URL updated via history.replaceState)
 
 ```bash
 npm run dev
