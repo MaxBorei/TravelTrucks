@@ -1,13 +1,8 @@
-// Тип одного відгуку
-export type Review = {
-  reviewer_name: string;
-  reviewer_rating: number;
-  comment?: string;
-};
+import type { UpstreamReview } from "@/types/types";
 
 // Обчислення середнього рейтингу + кількість відгуків
 export function getAverageRating(
-  reviews: Review[] | null | undefined,
+  reviews: UpstreamReview[] | null | undefined,
   precision = 1
 ): { average: number; count: number } {
   if (!Array.isArray(reviews) || reviews.length === 0) {

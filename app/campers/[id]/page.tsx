@@ -8,10 +8,9 @@ export default async function Page({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  // У Next 15 params — Promise, тому розпаковуємо
+  
   const { id } = await params;
 
-  // Серверний axios із абсолютною BASE_URL
   const camper: Camper = await getCamperByIdServer(id);
 
   return (

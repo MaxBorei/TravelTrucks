@@ -1,4 +1,3 @@
-// C:\Study\Next\traveltrucks\app\api\bookings\route.ts
 import { NextRequest, NextResponse } from "next/server";
 import type { BookingRequest } from "@/types/types";
 
@@ -19,7 +18,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Тут могла б бути реальна логіка (DB/SMTP/інтеграції)
+    // можна додати логіку
     return NextResponse.json(
       { ok: true, booking: { camperId, name, email, date, comment } },
       { status: 201 }

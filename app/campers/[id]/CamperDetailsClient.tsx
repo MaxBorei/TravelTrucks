@@ -2,34 +2,52 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-
 import css from "./CamperDetailsClient.module.css";
-
 import { createBooking } from "@/lib/api/clientApi";
 import type { Camper, EquipmentKey } from "@/types/types";
+import { getAverageRating } from "@/lib/utils/rating";
 
 /* ---------- Props ---------- */
 type Props = {
-  id: string;     // camper id для бронювання
-  camper: Camper; // дані кемпера (завантажені на сервері)
+  id: string;
+  camper: Camper;
 };
 
 /* ---------- Tabs ---------- */
 type Tab = "features" | "reviews";
 
 /* ---------- Feature flags ---------- */
-/**
- * Дозволяємо в «пігулках» як обладнання (EquipmentKey),
- * так і службові ключі трансмісії/двигуна.
- */
-type FeatureKey = EquipmentKey | "transmission" | "engine";
+type FeatureKey = EquipmentKey | "transmission" | "engine" | "radio";
 
-/** Маленький хелпер, щоб зберегти літерал ключа та не отримати string */
 const flag = <K extends FeatureKey>(key: K, label: string, value: boolean) => ({
   key,
   label,
   value,
 });
+
+/** Мапа іконок як у каталозі (додано radio → icon-radio) */
+const iconMap: Record<string, string> = {
+  // трансмісія
+  automatic: "icon-diagram",
+  manual: "icon-diagram",
+
+  // двигун
+  diesel: "icon-petrol",
+  petrol: "icon-petrol",
+  hybrid: "icon-petrol",
+
+  // обладнання
+  ac: "icon-wind",
+  tv: "icon-tv",
+  kitchen: "icon-cup-hot",
+  bathroom: "icon-ph_shower",
+  refrigerator: "icon-solar_fridge-outline",
+  fridge: "icon-solar_fridge-outline", // alias
+  microwave: "icon-lucide_microwave",
+  gas: "icon-hugeicons_gas-stove",
+  water: "icon-ion_water-outline",
+  radio: "icon-radio", // <- як просив, точна назва зі спрайту
+};
 
 export default function CamperDetailsClient({ id, camper }: Props) {
   const [tab, setTab] = useState<Tab>("features");
@@ -37,13 +55,9 @@ export default function CamperDetailsClient({ id, camper }: Props) {
   const [submitting, setSubmitting] = useState(false);
   const [toast, setToast] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  /* ---------- Rating (avg) ---------- */
-  const avgRating = useMemo(() => {
-    const r = camper.reviews ?? [];
-    if (!r.length) return camper.rating ?? 0;
-    const sum = r.reduce((s, x) => s + (x.reviewer_rating ?? 0), 0);
-    return sum / r.length;
-  }, [camper]);
+  /* ---------- Rating (avg) через утиліту ---------- */
+  const { average, count } = useMemo(() => getAverageRating(camper.reviews, 1), [camper.reviews]);
+  const avgRating = count > 0 ? average : (camper.rating ?? 0);
 
   /* ---------- Features (equipment + transmission/engine) ---------- */
   const featureFlags: Array<{ key: FeatureKey; label: string; value: boolean }> = [
@@ -54,7 +68,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
     flag("bathroom", "Bathroom", !!camper.bathroom),
     flag("kitchen", "Kitchen", !!camper.kitchen),
     flag("TV", "TV", !!camper.TV),
-    // flag("radio", "Radio", !!camper.radio),
+    flag("radio", "Radio", !!camper.radio),
     flag("refrigerator", "Fridge", !!camper.refrigerator),
     flag("microwave", "Microwave", !!camper.microwave),
     flag("gas", "Gas", !!camper.gas),
@@ -74,7 +88,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
   /* ---------- Submit через Axios ---------- */
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const formEl = e.currentTarget; // зберігаємо ДООО await, щоби не зловити "reading 'reset'"
+    const formEl = e.currentTarget;
     setSubmitting(true);
     setToast(null);
 
@@ -88,17 +102,15 @@ export default function CamperDetailsClient({ id, camper }: Props) {
         comment: String(fd.get("comment") ?? ""),
       };
 
-      // валідація (мінімальна)
       if (!payload.name || !payload.email || !payload.date) {
         throw new Error("Please fill in Name, Email and Date.");
       }
 
-      await createBooking(payload); // Axios -> /api/bookings (або ваш бекенд-роут)
+      await createBooking(payload);
       formEl.reset();
       setToast({ type: "success", text: "Booking request sent successfully!" });
     } catch (err: unknown) {
-      const msg =
-        err instanceof Error ? err.message : "Booking failed. Please try again.";
+      const msg = err instanceof Error ? err.message : "Booking failed. Please try again.";
       setToast({ type: "error", text: msg });
     } finally {
       setSubmitting(false);
@@ -116,10 +128,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
             <span className={css.rating}>
               <Image src="/star.png" width={16} height={16} alt="" />
               <span>{avgRating.toFixed(1)}</span>
-              <span className={css.muted}>
-                {" "}
-                ({(camper.reviews?.length ?? 0)} Reviews)
-              </span>
+              <span className={css.muted}> ({count} Reviews)</span>
             </span>
             <span className={css.dot}>·</span>
             <span className={css.location}>
@@ -179,22 +188,29 @@ export default function CamperDetailsClient({ id, camper }: Props) {
         {/* Left column */}
         <div className={css.leftCol}>
           {/* Опис */}
-          {camper.description && (
-            <p className={css.description}>{camper.description}</p>
-          )}
+          {camper.description && <p className={css.description}>{camper.description}</p>}
 
           {/* Пігулки features */}
           {tab === "features" && (
             <ul className={css.pills}>
-              {featureFlags.map((f) => (
-                <li key={`${f.key}-${f.label}`} className={css.pill}>
-                  {/* Іконку підбирайте за своїм мапінгом; для простоти іконку не міняю */}
-                  <svg className={css.pillIcon} aria-hidden="true">
-                    <use href="/sprite.svg#icon-diagram" />
-                  </svg>
-                  <span>{f.label}</span>
-                </li>
-              ))}
+              {featureFlags.map((f) => {
+                // якщо transmission/engine — ключ беремо зі значення (automatic/diesel...)
+                const iconKey =
+                  f.key === "transmission" || f.key === "engine"
+                    ? f.label.toLowerCase()
+                    : String(f.key).toLowerCase();
+
+                const iconId = iconMap[iconKey] ?? "icon-diagram";
+
+                return (
+                  <li key={`${f.key}-${f.label}`} className={css.pill}>
+                    <svg className={css.pillIcon} aria-hidden="true">
+                      <use href={`/sprite.svg#${iconId}`} />
+                    </svg>
+                    <span>{f.label}</span>
+                  </li>
+                );
+              })}
             </ul>
           )}
 
@@ -204,9 +220,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
               {(camper.reviews ?? []).map((r, i) => (
                 <div key={i} className={css.reviewItem}>
                   <div className={css.reviewerHead}>
-                    <div className={css.avatar}>
-                      {r.reviewer_name?.[0]?.toUpperCase() ?? "U"}
-                    </div>
+                    <div className={css.avatar}>{r.reviewer_name?.[0]?.toUpperCase() ?? "U"}</div>
                     <div>
                       <div className={css.reviewerName}>{r.reviewer_name ?? "User"}</div>
                       <div className={css.reviewerRating}>
@@ -218,9 +232,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
                   {r.comment && <p className={css.reviewText}>{r.comment}</p>}
                 </div>
               ))}
-              {!camper.reviews?.length && (
-                <p className={css.muted}>No reviews yet.</p>
-              )}
+              {!camper.reviews?.length && <p className={css.muted}>No reviews yet.</p>}
             </div>
           )}
 
@@ -242,9 +254,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
         <aside className={css.rightCol}>
           <form className={css.form} onSubmit={handleSubmit}>
             <h4 className={css.formTitle}>Book your campervan now</h4>
-            <p className={css.formMuted}>
-              Stay connected! We are always ready to help you.
-            </p>
+            <p className={css.formMuted}>Stay connected! We are always ready to help you.</p>
 
             <input
               className={css.input}
@@ -270,27 +280,15 @@ export default function CamperDetailsClient({ id, camper }: Props) {
               required
               disabled={submitting}
             />
-            <textarea
-              className={css.textarea}
-              name="comment"
-              placeholder="Comment"
-              rows={4}
-              disabled={submitting}
-            />
-            <button
-              type="submit"
-              className={css.submitBtn}
-              disabled={submitting}
-            >
+            <textarea className={css.textarea} name="comment" placeholder="Comment" rows={4} disabled={submitting} />
+            <button type="submit" className={css.submitBtn} disabled={submitting}>
               {submitting ? "Sending…" : "Send"}
             </button>
 
             {toast && (
               <div
                 role="status"
-                className={`${css.toast} ${
-                  toast.type === "success" ? css.toastSuccess : css.toastError
-                }`}
+                className={`${css.toast} ${toast.type === "success" ? css.toastSuccess : css.toastError}`}
               >
                 {toast.text}
               </div>

@@ -7,6 +7,7 @@ export type EquipmentKey =
   | 'kitchen'
   | 'bathroom'
   | 'TV'
+  | 'radio'
   | 'refrigerator'
   | 'microwave'
   | 'gas'
