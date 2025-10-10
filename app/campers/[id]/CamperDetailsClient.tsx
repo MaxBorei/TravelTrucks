@@ -3,67 +3,41 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import css from "./CamperDetailsClient.module.css";
-import { createBooking } from "@/lib/api/clientApi";
+import FeaturePills from "@/components/FeaturePills/FeaturePills";
+import ReviewsList from "@/components/ReviewsList/ReviewsList";
+import VehicleDetails from "@/components/VehicleDetails/VehicleDetails";
+import BookingForm from "@/components/BookingForm/BookingForm";
 import type { Camper, EquipmentKey } from "@/types/types";
 import { getAverageRating } from "@/lib/utils/rating";
 
-/* ---------- Props ---------- */
-type Props = {
-  id: string;
-  camper: Camper;
-};
-
-/* ---------- Tabs ---------- */
 type Tab = "features" | "reviews";
-
-/* ---------- Feature flags ---------- */
-type FeatureKey = EquipmentKey | "transmission" | "engine" | "radio";
-
-const flag = <K extends FeatureKey>(key: K, label: string, value: boolean) => ({
+export type FeatureKey = EquipmentKey | "transmission" | "engine" | "radio";
+export type FeatureFlag = { key: FeatureKey; label: string; value: boolean };
+const flag = <K extends FeatureKey>(key: K, label: string, value: boolean): FeatureFlag => ({
   key,
   label,
   value,
 });
 
-/** Мапа іконок як у каталозі (додано radio → icon-radio) */
-const iconMap: Record<string, string> = {
-  // трансмісія
-  automatic: "icon-diagram",
-  manual: "icon-diagram",
-
-  // двигун
-  diesel: "icon-petrol",
-  petrol: "icon-petrol",
-  hybrid: "icon-petrol",
-
-  // обладнання
-  ac: "icon-wind",
-  tv: "icon-tv",
-  kitchen: "icon-cup-hot",
-  bathroom: "icon-ph_shower",
-  refrigerator: "icon-solar_fridge-outline",
-  fridge: "icon-solar_fridge-outline", // alias
-  microwave: "icon-lucide_microwave",
-  gas: "icon-hugeicons_gas-stove",
-  water: "icon-ion_water-outline",
-  radio: "icon-radio", // <- як просив, точна назва зі спрайту
+type Props = {
+  id: string;
+  camper: Camper;
 };
 
 export default function CamperDetailsClient({ id, camper }: Props) {
   const [tab, setTab] = useState<Tab>("features");
 
-  const [submitting, setSubmitting] = useState(false);
-  const [toast, setToast] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  // середній рейтинг через утиліту (округлення 1 знак)
+  const { average, count } = useMemo(
+    () => getAverageRating(camper.reviews, 1),
+    [camper.reviews]
+  );
+  const avgRating = count > 0 ? average : camper.rating ?? 0;
 
-  /* ---------- Rating (avg) через утиліту ---------- */
-  const { average, count } = useMemo(() => getAverageRating(camper.reviews, 1), [camper.reviews]);
-  const avgRating = count > 0 ? average : (camper.rating ?? 0);
-
-  /* ---------- Features (equipment + transmission/engine) ---------- */
-  const featureFlags: Array<{ key: FeatureKey; label: string; value: boolean }> = [
+  // для бейдджів фіч
+  const featureFlags: FeatureFlag[] = [
     flag("transmission", camper.transmission, true),
     flag("engine", camper.engine, true),
-
     flag("AC", "AC", !!camper.AC),
     flag("bathroom", "Bathroom", !!camper.bathroom),
     flag("kitchen", "Kitchen", !!camper.kitchen),
@@ -73,9 +47,9 @@ export default function CamperDetailsClient({ id, camper }: Props) {
     flag("microwave", "Microwave", !!camper.microwave),
     flag("gas", "Gas", !!camper.gas),
     flag("water", "Water", !!camper.water),
-  ].filter((f) => f.value);
+  ].filter(f => f.value);
 
-  /* ---------- Vehicle details (right column) ---------- */
+  // vehicle details (показуємо лише на Features)
   const details = [
     { k: "Form", v: camper.form?.toString() ?? "" },
     { k: "Length", v: camper.length ?? "" },
@@ -83,87 +57,53 @@ export default function CamperDetailsClient({ id, camper }: Props) {
     { k: "Height", v: camper.height ?? "" },
     { k: "Tank", v: camper.tank ?? "" },
     { k: "Consumption", v: camper.consumption ?? "" },
-  ].filter((d) => d.v);
+  ].filter(d => d.v);
 
-  /* ---------- Submit через Axios ---------- */
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formEl = e.currentTarget;
-    setSubmitting(true);
-    setToast(null);
+  // перші 4 фото однакової ширини в ряд
+  const gallery = (camper.gallery ?? []).slice(0, 3);
 
-    try {
-      const fd = new FormData(formEl);
-      const payload = {
-        camperId: id,
-        name: String(fd.get("name") ?? ""),
-        email: String(fd.get("email") ?? ""),
-        date: String(fd.get("date") ?? ""),
-        comment: String(fd.get("comment") ?? ""),
-      };
-
-      if (!payload.name || !payload.email || !payload.date) {
-        throw new Error("Please fill in Name, Email and Date.");
-      }
-
-      await createBooking(payload);
-      formEl.reset();
-      setToast({ type: "success", text: "Booking request sent successfully!" });
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : "Booking failed. Please try again.";
-      setToast({ type: "error", text: msg });
-    } finally {
-      setSubmitting(false);
-    }
-  }
-
-  /* ---------- Render ---------- */
   return (
     <div className={css.detailsWrapper}>
-      {/* Header: Title, price, rating, location */}
-      <div className={css.header}>
-        <div>
-          <h1 className={css.title}>{camper.name}</h1>
-          <div className={css.meta}>
-            <span className={css.rating}>
+      {/* Header */}
+      <div className={css.header_container}>
+        <div className={css.header}>
+            <h1 className={css.title}>{camper.name}</h1>
+          <div className={css.header_rewies_location}>
+            <div className={css.meta}>
               <Image src="/star.png" width={16} height={16} alt="" />
-              <span>{avgRating.toFixed(1)}</span>
-              <span className={css.muted}> ({count} Reviews)</span>
-            </span>
-            <span className={css.dot}>·</span>
+              <span className={css.rating}>
+                <span>{avgRating.toFixed(1)}</span>
+                <span className={css.muted}>
+                  {" "}
+                  ({camper.reviews?.length ?? 0} Reviews)
+                </span>
+              </span>
+            </div>
             <span className={css.location}>
-              <svg className={css.locIcon} width="16" height="16" aria-hidden="true">
-                <use href="/sprite.svg#icon-Map" />
-              </svg>
-              {camper.location}
-            </span>
+                <svg className={css.locIcon} width="16" height="16" aria-hidden="true">
+                  <use href="/sprite.svg#icon-Map" />
+                </svg>
+                {camper.location}
+              </span>
           </div>
+          <p className={css.price}>€{camper.price.toFixed(2)}</p>
         </div>
-
-        <p className={css.price}>€{camper.price.toFixed(2)}</p>
-      </div>
-
-      {/* Gallery */}
-      <div className={css.gallery}>
-        <Image
-          className={css.mainImage}
-          src={camper.gallery?.[0]?.original || camper.gallery?.[0]?.thumb || "/Picture.jpg"}
-          alt={camper.name}
-          width={888}
-          height={380}
-        />
-        <div className={css.thumbs}>
-          {(camper.gallery ?? []).slice(1, 4).map((g, idx) => (
+        {/* Gallery — 4 однакові зображення в ряд */}
+        <div className={css.gallery}>
+          {gallery.map((g, i) => (
             <Image
-              key={idx}
-              className={css.thumb}
-              src={g.thumb || g.original || "/Picture.jpg"}
-              alt={`${camper.name} ${idx + 1}`}
-              width={280}
-              height={180}
+              key={i}
+              className={css.galleryImg}
+              src={g?.original || g?.thumb || "/Picture.jpg"}
+              alt={`${camper.name} ${i + 1}`}
+              width={284}
+              height={188}
+              priority={i === 0}
             />
           ))}
         </div>
+        {/* Опис ПІД картинками */}
+        {camper.description && <p className={css.description}>{camper.description}</p>}
       </div>
 
       {/* Tabs */}
@@ -185,115 +125,19 @@ export default function CamperDetailsClient({ id, camper }: Props) {
       </div>
 
       <div className={css.contentRow}>
-        {/* Left column */}
         <div className={css.leftCol}>
-          {/* Опис */}
-          {camper.description && <p className={css.description}>{camper.description}</p>}
-
-          {/* Пігулки features */}
-          {tab === "features" && (
-            <ul className={css.pills}>
-              {featureFlags.map((f) => {
-                // якщо transmission/engine — ключ беремо зі значення (automatic/diesel...)
-                const iconKey =
-                  f.key === "transmission" || f.key === "engine"
-                    ? f.label.toLowerCase()
-                    : String(f.key).toLowerCase();
-
-                const iconId = iconMap[iconKey] ?? "icon-diagram";
-
-                return (
-                  <li key={`${f.key}-${f.label}`} className={css.pill}>
-                    <svg className={css.pillIcon} aria-hidden="true">
-                      <use href={`/sprite.svg#${iconId}`} />
-                    </svg>
-                    <span>{f.label}</span>
-                  </li>
-                );
-              })}
-            </ul>
+          {tab === "features" ? (
+            <>
+              <FeaturePills items={featureFlags} />
+              <VehicleDetails items={details} />
+            </>
+          ) : (
+            <ReviewsList camper={camper} />
           )}
-
-          {/* Відгуки */}
-          {tab === "reviews" && (
-            <div className={css.reviews}>
-              {(camper.reviews ?? []).map((r, i) => (
-                <div key={i} className={css.reviewItem}>
-                  <div className={css.reviewerHead}>
-                    <div className={css.avatar}>{r.reviewer_name?.[0]?.toUpperCase() ?? "U"}</div>
-                    <div>
-                      <div className={css.reviewerName}>{r.reviewer_name ?? "User"}</div>
-                      <div className={css.reviewerRating}>
-                        <Image src="/star.png" width={14} height={14} alt="" />
-                        <span>{(r.reviewer_rating ?? 0).toFixed(1)}</span>
-                      </div>
-                    </div>
-                  </div>
-                  {r.comment && <p className={css.reviewText}>{r.comment}</p>}
-                </div>
-              ))}
-              {!camper.reviews?.length && <p className={css.muted}>No reviews yet.</p>}
-            </div>
-          )}
-
-          {/* Деталі транспортного засобу */}
-          <div className={css.detailsCard}>
-            <h4 className={css.detailsTitle}>Vehicle details</h4>
-            <ul className={css.detailsList}>
-              {details.map((d) => (
-                <li key={d.k} className={css.detailRow}>
-                  <span className={css.detailKey}>{d.k}</span>
-                  <span className={css.detailVal}>{d.v}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
-        {/* Right column — booking form */}
         <aside className={css.rightCol}>
-          <form className={css.form} onSubmit={handleSubmit}>
-            <h4 className={css.formTitle}>Book your campervan now</h4>
-            <p className={css.formMuted}>Stay connected! We are always ready to help you.</p>
-
-            <input
-              className={css.input}
-              type="text"
-              name="name"
-              placeholder="Name*"
-              required
-              disabled={submitting}
-            />
-            <input
-              className={css.input}
-              type="email"
-              name="email"
-              placeholder="Email*"
-              required
-              disabled={submitting}
-            />
-            <input
-              className={css.input}
-              type="date"
-              name="date"
-              placeholder="Date*"
-              required
-              disabled={submitting}
-            />
-            <textarea className={css.textarea} name="comment" placeholder="Comment" rows={4} disabled={submitting} />
-            <button type="submit" className={css.submitBtn} disabled={submitting}>
-              {submitting ? "Sending…" : "Send"}
-            </button>
-
-            {toast && (
-              <div
-                role="status"
-                className={`${css.toast} ${toast.type === "success" ? css.toastSuccess : css.toastError}`}
-              >
-                {toast.text}
-              </div>
-            )}
-          </form>
+          <BookingForm camperId={id} />
         </aside>
       </div>
     </div>

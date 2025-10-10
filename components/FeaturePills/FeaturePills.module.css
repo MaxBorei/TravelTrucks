@@ -1,0 +1,28 @@
+.pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: var(--inputs);
+    padding: 44px 52px 50px;
+    border-radius: 10px;
+}
+
+.pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    background: var(--gray-light);
+    color: var(--main);
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: var(--fw-medium);
+    font-family: var(--font-family); 
+    line-height: 1.5;
+}
+
+.icon {
+    width: 22px;
+    height: 22px;
+    fill: currentColor;
+}
