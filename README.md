@@ -5,45 +5,54 @@ Filtering/sorting/pagination are handled on the backend (Next Route Handler). Th
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-Tech stack
-
+Tech stack:
 Next.js (app router)
-
 TypeScript (no any)
-
 Zustand (+ persist) — global state (filters, favorites)
-
 @tanstack/react-query — data/cache/refetch
-
 Axios — requests to /api
-
 CSS Modules — component styles
-
 Next Image — images
+
+Features:
+Filters: location, equipment, transmission, engine, vehicleType
+Server-side pagination + Show more button (lazy-load 4 cards per click)
+URL sync for draft filters (?page=&location=&filters=AC,kitchen…)
+Apply filters via Search button (triggers backend request)
+Reset — clears filters and URL
+Favorites (local, via Zustand persist)
+Universal <Button /> component with primary | outline variants
+Refresh resilience: applied filters and favorites are preserved
+No jump-to-top on filter clicks (URL updated via history.replaceState)
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
-Features
+```bash
+npm i
+# or
+yarn
+# or
+pnpm i
+# or
+bun install
+```
+Environment variables
 
-Filters: location, equipment, transmission, engine, vehicleType
+Configure your environment variables:
 
-Server-side pagination + Show more button (lazy-load 4 cards per click)
+```bash
+cp .env.example .env
+# Fill in: BASE_URL, etc.
+```
 
-URL sync for draft filters (?page=&location=&filters=AC,kitchen…)
+```bash
+# Upstream API base used by Next.js Route Handlers when fetching external data
+BASE_URL=https://66b1f8e71ca8ad33d4f5f63e.mockapi.io
+```
 
-Apply filters via Search button (triggers backend request)
-
-Reset — clears filters and URL
-
-Favorites (local, via Zustand persist)
-
-Universal <Button /> component with primary | outline variants
-
-Refresh resilience: applied filters and favorites are preserved
-
-No jump-to-top on filter clicks (URL updated via history.replaceState)
+Then, run the development server:
 
 ```bash
 npm run dev
