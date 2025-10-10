@@ -10,7 +10,12 @@ const inter = Inter({
   variable: "--font-sans",
 });
 
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+
   title: {
     default: "TravelTrucks — Camper Rentals",
     template: "%s | TravelTrucks",
@@ -18,33 +23,51 @@ export const metadata: Metadata = {
   description:
     "TravelTrucks is a camper rental service that gives you the freedom to travel anywhere with comfort and style.",
   keywords: [
-    "camper rental", "campervan", "RV", "vanlife", "off-road", "rent a camper"
+    "camper rental",
+    "campervan",
+    "RV",
+    "vanlife",
+    "off-road",
+    "rent a camper",
   ],
+
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "any" },            // <-- без /public
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/icon-32x32.png", type: "image/png", sizes: "32x32" },
       { url: "/icon-16x16.png", type: "image/png", sizes: "16x16" },
     ],
     apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
   },
-  
+
   openGraph: {
     title: "TravelTrucks — Camper Rentals",
     description:
       "Fully equipped campervans for adventures anywhere — comfort, flexibility, and support.",
-    url: "/", 
+    url: "/",                   // стає абсолютним за рахунок metadataBase
     siteName: "TravelTrucks",
     type: "website",
     images: [{ url: "/og.jpg", width: 1200, height: 630 }],
   },
+
   twitter: {
     card: "summary_large_image",
     title: "TravelTrucks — Camper Rentals",
     description: "Freedom to travel anywhere with comfort and style.",
     images: ["/og.jpg"],
   },
+
+  alternates: {
+    canonical: "/",            // також резольвиться від metadataBase
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
+
+
 
 export default function RootLayout({
   children,

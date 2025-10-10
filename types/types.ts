@@ -74,3 +74,15 @@ export interface Paginated<T> {
   limit: number;
   pages: number;
 }
+
+export type BookingRequest = {
+  camperId: string;
+  name: string;
+  email: string;
+  date: string;     
+  comment?: string;
+};
+
+export interface BookingResponse {
+  ok: true;
+}

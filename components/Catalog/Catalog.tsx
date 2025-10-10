@@ -21,6 +21,7 @@ import type {
   Engine,
   Form,
 } from "@/types/types";
+import Link from "next/link";
 
 // ===== helpers =====
 const isTransmission = (v: string): v is Transmission =>
@@ -495,10 +496,8 @@ useEffect(() => {
                         );
                       })}
                   </ul>
-
-                  <button type="button" className={css.showMore}>
-                    Show more
-                  </button>
+                  <Link href={`/campers/${camper.id}`} className={css.showMore}>Show more
+                  </Link>
                 </div>
               </article>
             );
