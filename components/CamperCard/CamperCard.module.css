@@ -1,203 +1,211 @@
 .card {
-    border: 1px solid var(--gray-light);
-    border-radius: 20px;
-    padding: 24px;
-    width: 888px;
-    height: 368px;
-    background: var(--white);
-    display: flex;
-    gap: 24px;
+  border: 1px solid var(--gray-light);
+  border-radius: 20px;
+  padding: 24px;
+  width: 888px;
+  height: 368px;
+  background: var(--white);
+  display: flex;
+  gap: 24px;
 }
 
 .image {
-    width: 292px;
-    height: 320px;
-    object-fit: cover;
-    border-radius: 10px;
+  width: 292px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
 .cardContent {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    min-width: 0;
-    justify-content: space-between;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  justify-content: space-between;
 }
 
 .cardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .cardTitle {
-    font-family: var(--font-family);
-    font-weight: var(--fw-semibold);
-    font-size: 24px;
-    line-height: 1.33;
-    color: var(--main);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-family: var(--font-family);
+  font-weight: var(--fw-semibold);
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cardPrice {
-    font-weight: var(--fw-semibold);
-    font-family: var(--font-family);
-    font-size: 24px;
-    line-height: 1.33;
-    color: var(--main);
+  font-weight: var(--fw-semibold);
+  font-family: var(--font-family);
+  font-size: 24px;
+  line-height: 1.33;
+  color: var(--main);
 }
 
 /* ---- Рейтинг + локация ---- */
 .rating_location_container {
-    display: flex;
-    align-items: center;
-    gap: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .ratingWrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: var(--main);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--main);
 }
 
 .starIcon {
-    width: 16px;
-    height: 16px;
-    display: inline-block;
+  width: 16px;
+  height: 16px;
+  display: inline-block;
 }
 
 .ratingText {
-    display: flex;
-    font-size: 16px;
-    font-weight: var(--fw-regular);
-    line-height: 1.5;
-    color: var(--main);
-    text-decoration: underline;
-    text-decoration-skip-ink: none;
+  display: flex;
+  font-size: 16px;
+  font-weight: var(--fw-regular);
+  line-height: 1.5;
+  color: var(--main);
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
 }
 
 .muted {
-    color: var(--text);
+  color: var(--text);
 }
 
 .locationWrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 
 .locationIcon {
-    color: var(--gray);
+  color: var(--gray);
 }
 
 .cardLocation {
-    font-size: 16px;
-    color: var(--main);
-    line-height: 1.5;
-    font-weight: var(--fw-regular);
+  font-size: 16px;
+  color: var(--main);
+  line-height: 1.5;
+  font-weight: var(--fw-regular);
 }
 
 .cardDescription {
-    font-size: 16px;
-    font-weight: var(--fw-regular);
-    color: var(--text);
-    line-height: 1.5;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 16px;
+  font-weight: var(--fw-regular);
+  color: var(--text);
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* ======= СТАРЫЕ ПИЛЮЛИ (локально в карточке) ======= */
+/* ======= ПИЛЮЛИ  ======= */
 .cardFeatures {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .featurePill {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 16px;
-    background: var(--badges);
-    color: var(--main);
-    border-radius: 999px;
-    font-size: 16px;
-    font-weight: var(--fw-medium);
-    line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--badges);
+  color: var(--main);
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
 }
 
 .featureIcon {
-    width: 22px;
-    height: 22px;
-    color: var(--main);
-    fill: currentColor;
+  width: 22px;
+  height: 22px;
+  color: var(--main);
+  fill: currentColor;
 }
 
 .showMore {
-    width: 166px;
-    height: 56px;
-    background: var(--button);
-    color: var(--white);
-    border: none;
-    border-radius: 200px;
-    font-weight: var(--fw-semibold);
-    font-size: 16px;
-    cursor: pointer;
-    transition: background .2s ease, transform .06s ease, box-shadow .2s ease;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 16px;
-    box-sizing: border-box;
+  width: 166px;
+  height: 56px;
+  background: var(--button);
+  color: var(--white);
+  border: none;
+  border-radius: 200px;
+  font-weight: var(--fw-semibold);
+  font-size: 16px;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.06s ease,
+    box-shadow 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  box-sizing: border-box;
 }
 
 .showMore:hover {
-    background: var(--button-hover);
+  background: var(--button-hover);
 }
 
 /* ===== PRICE + FAVORITE ===== */
 .priceWrap {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .favBtn {
-    appearance: none;
-    border: 0;
-    background: transparent;
-    padding: 4px;
-    line-height: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--gray);
-    transition: color .2s ease, transform .06s ease;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 4px;
+  line-height: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--gray);
+  transition:
+    color 0.2s ease,
+    transform 0.06s ease;
 }
 
 .favBtn:hover {
-    transform: scale(1.05);
+  transform: scale(1.05);
 }
 
 .favBtn:active {
-    transform: translateY(1px);
+  transform: translateY(1px);
 }
 
 .favIcon {
-    width: 28px;
-    height: 24px;
-    fill: currentColor;
-    transition: fill .2s ease, stroke .2s ease, color .2s ease;
+  width: 28px;
+  height: 24px;
+  fill: currentColor;
+  transition:
+    fill 0.2s ease,
+    stroke 0.2s ease,
+    color 0.2s ease;
 }
 
 .favIconActive {
-    color: var(--button);
-    fill: currentColor;
+  color: var(--button);
+  fill: currentColor;
 }
