@@ -11,7 +11,9 @@ export default function FeaturePills({ items }: Props) {
     <ul className={css.pills}>
       {items.map((f) => {
         const iconKey =
-          f.key === "transmission" || f.key === "engine" ? f.label : String(f.key);
+          f.key === "transmission" || f.key === "engine"
+            ? f.label
+            : String(f.key);
         const iconId = getIconId(iconKey);
 
         return (

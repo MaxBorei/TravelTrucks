@@ -5,13 +5,12 @@ import { Inter } from "next/font/google";
 import Providers from "@/components/Provider/ReactQueryProvider";
 
 const inter = Inter({
-   subsets: ["latin"],
+  subsets: ["latin"],
   weight: ["400", "500", "600", "700", "800"],
   variable: "--font-sans",
 });
 
-const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -37,14 +36,16 @@ export const metadata: Metadata = {
       { url: "/icon-32x32.png", type: "image/png", sizes: "32x32" },
       { url: "/icon-16x16.png", type: "image/png", sizes: "16x16" },
     ],
-    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
 
   openGraph: {
     title: "TravelTrucks — Camper Rentals",
     description:
       "Fully equipped campervans for adventures anywhere — comfort, flexibility, and support.",
-    url: "/",                   // стає абсолютним за рахунок metadataBase
+    url: "/",
     siteName: "TravelTrucks",
     type: "website",
     images: [{ url: "/og.jpg", width: 1200, height: 630 }],
@@ -58,7 +59,7 @@ export const metadata: Metadata = {
   },
 
   alternates: {
-    canonical: "/",            // також резольвиться від metadataBase
+    canonical: "/", // також резольвиться від metadataBase
   },
 
   robots: {
@@ -66,8 +67,6 @@ export const metadata: Metadata = {
     follow: true,
   },
 };
-
-
 
 export default function RootLayout({
   children,

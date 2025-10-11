@@ -130,9 +130,7 @@
 
 .leftCol {
     border-radius: 10px;
-    /* padding: 44px 80px; */
     width: 631px;
-    height: 588px;
 }
 
 .rightCol {
@@ -140,5 +138,5 @@
     border-radius: 10px;
     padding: 44px 57px;
     width: 641px;
-    height: 588px;
+    
 }
