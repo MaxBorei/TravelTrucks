@@ -25,7 +25,7 @@ const isEquipment = (v: string): v is EquipmentKey =>
     "microwave",
     "gas",
     "water",
-  ].includes(v as EquipmentKey); 
+  ].includes(v as EquipmentKey);
 
 function draftToSearchParams(
   d: {

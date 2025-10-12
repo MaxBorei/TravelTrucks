@@ -196,13 +196,13 @@
 }
 
 .favIcon {
-  width: 28px;
+  width: 26px;
   height: 24px;
   fill: currentColor;
-  transition:
+  /* transition:
     fill 0.2s ease,
     stroke 0.2s ease,
-    color 0.2s ease;
+    color 0.2s ease; */
 }
 
 .favIconActive {

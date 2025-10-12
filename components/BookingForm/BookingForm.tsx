@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createBooking } from "@/lib/api/clientApi";
 import css from "./BookingForm.module.css";
 import BookingDateField from "../BookingDateField/BookingDateField";
@@ -13,6 +13,12 @@ export default function BookingForm({ camperId }: Props) {
     type: "success" | "error";
     text: string;
   } | null>(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const id = setTimeout(() => setToast(null), 3000);
+    return () => clearTimeout(id);
+  }, [toast]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -49,7 +55,7 @@ export default function BookingForm({ camperId }: Props) {
   }
 
   return (
-    <form className={css.form} onSubmit={handleSubmit}>
+    <form className={css.form} onSubmit={handleSubmit} noValidate>
       <h4 className={css.title}>Book your campervan now</h4>
       <p className={css.muted}>
         Stay connected! We are always ready to help you.
@@ -99,16 +105,15 @@ export default function BookingForm({ camperId }: Props) {
         {submitting ? "Sending…" : "Send"}
       </button>
 
-      {toast &&
-        (setTimeout(() => setToast(null), 3000),
-        (
-          <div
-            role="status"
-            className={`${css.toast} ${toast.type === "success" ? css.toastSuccess : css.toastError}`}
-          >
-            {toast.text}
-          </div>
-        ))}
+      {toast && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={`${css.toast} ${toast.type === "success" ? css.toastSuccess : css.toastError}`}
+        >
+          {toast.text}
+        </div>
+      )}
     </form>
   );
 }

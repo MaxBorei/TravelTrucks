@@ -13,7 +13,11 @@ import { getAverageRating } from "@/lib/utils/rating";
 type Tab = "features" | "reviews";
 export type FeatureKey = EquipmentKey | "transmission" | "engine" | "radio";
 export type FeatureFlag = { key: FeatureKey; label: string; value: boolean };
-const flag = <K extends FeatureKey>(key: K, label: string, value: boolean): FeatureFlag => ({
+const flag = <K extends FeatureKey>(
+  key: K,
+  label: string,
+  value: boolean
+): FeatureFlag => ({
   key,
   label,
   value,
@@ -27,12 +31,11 @@ type Props = {
 export default function CamperDetailsClient({ id, camper }: Props) {
   const [tab, setTab] = useState<Tab>("features");
 
-  // середній рейтинг через утиліту (округлення 1 знак)
   const { average, count } = useMemo(
     () => getAverageRating(camper.reviews, 1),
     [camper.reviews]
   );
-  const avgRating = count > 0 ? average : camper.rating ?? 0;
+  const avgRating = count > 0 ? average : (camper.rating ?? 0);
 
   // для бейдджів фіч
   const featureFlags: FeatureFlag[] = [
@@ -47,7 +50,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
     flag("microwave", "Microwave", !!camper.microwave),
     flag("gas", "Gas", !!camper.gas),
     flag("water", "Water", !!camper.water),
-  ].filter(f => f.value);
+  ].filter((f) => f.value);
 
   // vehicle details (показуємо лише на Features)
   const details = [
@@ -57,7 +60,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
     { k: "Height", v: camper.height ?? "" },
     { k: "Tank", v: camper.tank ?? "" },
     { k: "Consumption", v: camper.consumption ?? "" },
-  ].filter(d => d.v);
+  ].filter((d) => d.v);
 
   // перші 4 фото однакової ширини в ряд
   const gallery = (camper.gallery ?? []).slice(0, 3);
@@ -67,7 +70,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
       {/* Header */}
       <div className={css.header_container}>
         <div className={css.header}>
-            <h1 className={css.title}>{camper.name}</h1>
+          <h1 className={css.title}>{camper.name}</h1>
           <div className={css.header_rewies_location}>
             <div className={css.meta}>
               <Image src="/star.png" width={16} height={16} alt="" />
@@ -80,11 +83,16 @@ export default function CamperDetailsClient({ id, camper }: Props) {
               </span>
             </div>
             <span className={css.location}>
-                <svg className={css.locIcon} width="16" height="16" aria-hidden="true">
-                  <use href="/sprite.svg#icon-Map" />
-                </svg>
-                {camper.location}
-              </span>
+              <svg
+                className={css.locIcon}
+                width="16"
+                height="16"
+                aria-hidden="true"
+              >
+                <use href="/sprite.svg#icon-Map" />
+              </svg>
+              {camper.location}
+            </span>
           </div>
           <p className={css.price}>€{camper.price.toFixed(2)}</p>
         </div>
@@ -103,7 +111,9 @@ export default function CamperDetailsClient({ id, camper }: Props) {
           ))}
         </div>
         {/* Опис ПІД картинками */}
-        {camper.description && <p className={css.description}>{camper.description}</p>}
+        {camper.description && (
+          <p className={css.description}>{camper.description}</p>
+        )}
       </div>
 
       {/* Tabs */}

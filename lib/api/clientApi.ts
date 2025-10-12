@@ -1,4 +1,3 @@
-// C:\Study\Next\traveltrucks\lib\api\clientApi.ts
 import type {
   CampersQuery,
   Paginated,

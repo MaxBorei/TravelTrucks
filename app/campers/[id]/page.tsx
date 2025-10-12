@@ -3,23 +3,33 @@ import CamperDetailsClient from "./CamperDetailsClient";
 import type { Camper } from "@/types/types";
 import { getCamperByIdServer } from "@/lib/api/serverApi";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+
+type Params = { id: string };
 
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<Params>;
 }): Promise<Metadata> {
-  return { alternates: { canonical: `/campers/${params.id}` } };
-}
-
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
   const { id } = await params;
 
-  const camper: Camper = await getCamperByIdServer(id);
+  return {
+    alternates: { canonical: `/campers/${id}` },
+  };
+}
+
+export default async function Page({ params }: { params: Promise<Params> }) {
+  const { id } = await params;
+
+  let camper: Camper | null = null;
+  try {
+    camper = await getCamperByIdServer(id);
+  } catch {
+    notFound();
+  }
+
+  if (!camper) notFound();
 
   return (
     <Container>
