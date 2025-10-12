@@ -99,14 +99,16 @@ export default function BookingForm({ camperId }: Props) {
         {submitting ? "Sending…" : "Send"}
       </button>
 
-      {toast && (
-        <div
-          role="status"
-          className={`${css.toast} ${toast.type === "success" ? css.toastSuccess : css.toastError}`}
-        >
-          {toast.text}
-        </div>
-      )}
+      {toast &&
+        (setTimeout(() => setToast(null), 3000),
+        (
+          <div
+            role="status"
+            className={`${css.toast} ${toast.type === "success" ? css.toastSuccess : css.toastError}`}
+          >
+            {toast.text}
+          </div>
+        ))}
     </form>
   );
 }

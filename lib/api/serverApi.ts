@@ -1,4 +1,3 @@
-// C:\Study\Next\traveltrucks\lib\api\serverApi.ts
 import type { Camper } from "@/types/types";
 import { BASE, nextServer } from "./api";
 
@@ -8,8 +7,7 @@ export function upstreamUrl(path: string, search?: string): string {
   return url.toString();
 }
 
-/** SERVER: отримати кемпер за id напряму з апстріму */
 export async function getCamperByIdServer(id: string): Promise<Camper> {
-  const { data } = await nextServer.get<Camper>(`/campers/${encodeURIComponent(id)}`);
+  const { data } = await nextServer.get<Camper>(`/campers/${(id)}`);
   return data;
 }
