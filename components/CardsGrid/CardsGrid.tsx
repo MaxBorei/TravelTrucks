@@ -6,11 +6,11 @@ import type { Camper } from "@/types/types";
 
 type Props = {
   campers: Camper[];
-  favorites: Record<string, true> | Record<string, boolean>; // совместимость с твоим стором
+  favorites: Record<string, true> | Record<string, boolean>;
   onToggleFavorite: (id: string) => void;
   canLoadMore: boolean;
   onLoadMore: () => void;
-  isFetching?: boolean; // ← добавили
+  isFetching?: boolean;
 };
 
 export default function CardsGrid({
@@ -19,7 +19,7 @@ export default function CardsGrid({
   onToggleFavorite,
   canLoadMore,
   onLoadMore,
-  isFetching = false, // ← дефолт
+  isFetching = false,
 }: Props) {
   return (
     <div className={css.cards}>

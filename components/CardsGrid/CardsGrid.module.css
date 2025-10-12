@@ -1,30 +1,30 @@
 .cards {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 /* ===== BOTTOM "LOAD MORE"  ===== */
 .loadMore {
-    width: 145px;
-    height: 56px;
-    background: transparent;
-    color: var(--main);
-    border: 1px solid var(--gray-light);
-    border-radius: 200px;
-    font-weight: var(--fw-semibold);
-    font-size: 16px;
-    cursor: pointer;
-    display: block;
-    margin: 12px auto 40px;
+  width: 145px;
+  height: 56px;
+  background: transparent;
+  color: var(--main);
+  border: 1px solid var(--gray-light);
+  border-radius: 200px;
+  font-weight: var(--fw-semibold);
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  margin: 12px auto 40px;
 }
 
 .loadMore:active {
-    border-color: var(--button);
+  border-color: var(--button);
 }
 
 .loadMore[disabled] {
-    opacity: 0.6;
-    cursor: not-allowed;
+  opacity: 0.6;
+  cursor: not-allowed;
 }

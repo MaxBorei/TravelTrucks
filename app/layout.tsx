@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TravelTrucks — Camper Rentals",
     description: "Fully equipped campervans ...",
-    url: "/", // ок
+    url: "/",
     siteName: "TravelTrucks",
     type: "website",
     images: [{ url: "/og.jpg", width: 1200, height: 630 }],
