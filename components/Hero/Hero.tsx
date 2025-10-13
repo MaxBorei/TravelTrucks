@@ -26,7 +26,7 @@ export default function Hero() {
           <p className={css.subtitle}>
             You can find everything you want in our catalog
           </p>
-          <Link href="/catalog" className={css.button}>
+          <Link href="/catalog" className={css.button} prefetch={false}>
             View Now
           </Link>
         </div>

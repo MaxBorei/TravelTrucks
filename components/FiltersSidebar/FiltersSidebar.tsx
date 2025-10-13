@@ -71,7 +71,7 @@ export default function FiltersSidebar({ onApply, onReset }: Props) {
   );
 
   return (
-    <aside className={css.filters}>
+    <div className={css.filters}>
       {/* Location */}
       <div className={css.filterBlock}>
         <label className={css.filterLabel}>Location</label>
@@ -203,6 +203,6 @@ export default function FiltersSidebar({ onApply, onReset }: Props) {
           Reset
         </button>
       </div>
-    </aside>
+    </div>
   );
 }

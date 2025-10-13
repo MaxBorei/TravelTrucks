@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function BookingDateField() {
   const [value, setValue] = useState<Date | null>(null);
-
+  const WEEKDAYS_3 = ["SUN", "MON", "TUE", "WED", "THE", "FRI", "SAT"];
   const today = useMemo(() => {
     const d = new Date();
     d.setHours(0, 0, 0, 0);
@@ -23,6 +23,19 @@ export default function BookingDateField() {
       placeholderText="Booking date*"
       name="date"
       required
+      calendarStartDay={1}
+      formatWeekDay={(nameOfDay: string) => {
+        const idx = [
+          "Sunday",
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+        ].findIndex((full) => nameOfDay.startsWith(full.slice(0, 3)));
+        return idx >= 0 ? WEEKDAYS_3[idx] : nameOfDay.slice(0, 3);
+      }}
       wrapperClassName={css.wrapper}
       minDate={today}
       filterDate={(d) => d >= today}

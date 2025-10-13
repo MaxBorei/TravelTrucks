@@ -12,6 +12,7 @@ type Props = {
   camper: Camper;
   isFavorite: boolean;
   onToggleFavorite: (id: string) => void;
+  lcp?: boolean;
 };
 
 const PRIORITY: FeatureFlag["key"][] = [
@@ -41,6 +42,7 @@ export default function CamperCard({
   camper,
   isFavorite,
   onToggleFavorite,
+  lcp = false,
 }: Props) {
   const reviewsCount = camper.reviews?.length ?? 0;
   const average = reviewsCount
@@ -50,13 +52,18 @@ export default function CamperCard({
   const topFeatures = sortByPriority(buildFeatureFlags(camper)).slice(0, 5);
 
   return (
-    <article className={css.card}>
+    <section className={css.card}>
       <Image
         src={camper.gallery?.[0]?.thumb || "/Picture.jpg"}
         alt={camper.name}
         width={292}
         height={320}
         className={css.image}
+        /* LCP-friendly */
+        priority={lcp}
+        loading={lcp ? "eager" : "lazy"}
+        fetchPriority={lcp ? "high" : "auto"}
+        sizes="(max-width: 768px) 100vw, 292px"
       />
 
       <div className={css.cardContent}>
@@ -74,7 +81,9 @@ export default function CamperCard({
                 title={isFavorite ? "In favorites" : "Add to favorites"}
               >
                 <svg
-                  className={`${css.favIcon} ${isFavorite ? css.favIconActive : ""}`}
+                  className={`${css.favIcon} ${
+                    isFavorite ? css.favIconActive : ""
+                  }`}
                   aria-hidden="true"
                 >
                   <use href="/sprite.svg#icon-Heart" />
@@ -114,7 +123,6 @@ export default function CamperCard({
 
         <p className={css.cardDescription}>{camper.description}</p>
 
-        {/* пилюли */}
         <ul className={css.cardFeatures}>
           {topFeatures.map((f) => {
             const iconKey =
@@ -134,10 +142,14 @@ export default function CamperCard({
           })}
         </ul>
 
-        <Link href={`/campers/${camper.id}`} className={css.showMore}>
+        <Link
+          href={`/campers/${camper.id}`}
+          className={css.showMore}
+          prefetch={false}
+        >
           Show more
         </Link>
       </div>
-    </article>
+    </section>
   );
 }

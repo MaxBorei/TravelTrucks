@@ -1,0 +1,46 @@
+.btn {
+  position: fixed; /* бігає по всьому екрану */
+  z-index: 9999;
+
+  width: 166px;
+  height: 56px;
+
+  /* стиль як у твоєї форми */
+  background: var(--button);
+  border: none;
+  border-radius: 200px;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+
+  /* плавності з оригіналу */
+  transition:
+    background 0.2s ease,
+    transform 0.06s ease,
+    box-shadow 0.2s ease;
+
+  /* для вертикального центру тексту */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* легка тінь — щоб не губилась */
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.btn:hover {
+  /* трохи темніший фон на hover, якщо є змінна --button-hover — використовуй її */
+  filter: brightness(0.95);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+}
+
+.btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.btn:focus-visible {
+  outline: 3px solid color-mix(in oklab, var(--button) 45%, white);
+  outline-offset: 2px;
+}

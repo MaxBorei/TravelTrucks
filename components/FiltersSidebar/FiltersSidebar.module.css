@@ -1,150 +1,156 @@
 /* ============ SIDEBAR ============ */
 .filters {
-    width: 360px;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    background: var(--white);
+  width: 360px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  background: var(--white);
 }
 
 .filterBlock {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .filterLabel {
-    font-weight: var(--fw-semibold);
-    font-size: 16px;
-    color: var(--main);
+  font-weight: var(--fw-semibold);
+  font-size: 16px;
+  color: var(--main);
 }
 
 .filterTitle {
-    font-weight: var(--fw-semibold);
-    font-size: 18px;
-    color: var(--main);
-    margin-bottom: 8px;
+  font-weight: var(--fw-semibold);
+  font-size: 18px;
+  color: var(--main);
+  margin-bottom: 8px;
 }
 
 /* ============ LOCATION ============ */
 .locationField {
-    width: 360px;
-    height: 56px;
-    box-sizing: border-box;
-    padding-left: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: var(--inputs);
-    border: 1px solid var(--gray-light);
-    border-radius: 12px;
+  width: 360px;
+  height: 56px;
+  box-sizing: border-box;
+  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--inputs);
+  border: 1px solid var(--gray-light);
+  border-radius: 12px;
 }
 
 .locationIcon {
-    color: var(--gray);
+  color: var(--gray);
 }
 
 .locationInput {
-    flex: 1 1 auto;
-    min-width: 0;
-    border: 0;
-    outline: none;
-    background: transparent;
-    color: var(--main);
-    font: inherit;
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--main);
+  font: inherit;
 }
 
 .locationInput::placeholder {
-    color: var(--gray);
+  color: var(--gray);
 }
 
 .filterInput {
-    width: 100%;
-    height: 56px;
-    padding: 0 16px;
-    border: 1px solid var(--gray-light);
-    border-radius: 12px;
-    font-size: 16px;
-    color: var(--main);
-    background: var(--inputs);
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid var(--gray-light);
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--main);
+  background: var(--inputs);
 }
 
 .filterInput::placeholder {
-    color: var(--gray);
+  color: var(--gray);
 }
 
 /* ============ FILTER BUTTONS ============ */
 .filterOptions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .filterBtn {
-    width: 112px;
-    height: 96px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border: 1px solid var(--gray-light);
-    border-radius: 12px;
-    background: var(--white);
-    font-size: 16px;
-    font-weight: var(--fw-medium);
-    line-height: 1.5;
-    color: var(--main);
-    transition: border-color 0.2s ease, background 0.2s ease;
+  width: 112px;
+  height: 96px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--gray-light);
+  border-radius: 12px;
+  background: var(--white);
+  font-size: 16px;
+  font-weight: var(--fw-medium);
+  line-height: 1.5;
+  color: var(--main);
+  letter-spacing: -0.01em;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+  padding: 4px 16px;
 }
 
 .activeFilter {
-    border-color: var(--button);
+  border-color: var(--button);
 }
 
 .icon {
-    width: 32px;
-    height: 32px;
-    color: var(--main);
-    fill: currentColor;
+  width: 32px;
+  height: 32px;
+  fill: var(--main);
 }
 
 /* ===== ACTION BUTTONS (Search + Reset) ===== */
 .actions {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
 }
 
 .searchBtn,
 .resetBtn {
-    width: 166px;
-    height: 56px;
-    align-self: center;
-    background: var(--button);
-    border: none;
-    border-radius: 200px;
-    color: var(--white);
-    font-size: 16px;
-    font-weight: var(--fw-semibold);
-    cursor: pointer;
-    transition: background 0.2s ease, transform .06s ease, box-shadow .2s ease;
+  width: 166px;
+  height: 56px;
+  align-self: center;
+  background: var(--button);
+  border: none;
+  border-radius: 200px;
+  color: var(--white);
+  font-size: 16px;
+  font-weight: var(--fw-semibold);
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.06s ease,
+    box-shadow 0.2s ease;
 }
 
 .searchBtn:hover,
 .resetBtn:hover {
-    background: var(--button-hover);
+  background: var(--button-hover);
 }
 
 .searchBtn:active,
 .resetBtn:active {
-    transform: translateY(1px);
+  transform: translateY(1px);
 }
 
 .searchBtn:focus-visible,
 .resetBtn:focus-visible {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(217, 45, 32, 0.25);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(217, 45, 32, 0.25);
 }

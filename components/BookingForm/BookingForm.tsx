@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createBooking } from "@/lib/api/clientApi";
 import css from "./BookingForm.module.css";
 import BookingDateField from "../BookingDateField/BookingDateField";
+import EvasiveDiscountButtonGlobal from "../EvasiveDiscountButton/EvasiveDiscountButton";
 
 type Props = { camperId: string };
 
@@ -100,7 +101,7 @@ export default function BookingForm({ camperId }: Props) {
           disabled={submitting}
         />
       </div>
-
+      <EvasiveDiscountButtonGlobal label="Тисни 90% знижки!" />
       <button type="submit" className={css.submit} disabled={submitting}>
         {submitting ? "Sending…" : "Send"}
       </button>

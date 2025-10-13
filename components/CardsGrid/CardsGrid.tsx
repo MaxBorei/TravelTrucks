@@ -6,7 +6,8 @@ import type { Camper } from "@/types/types";
 
 type Props = {
   campers: Camper[];
-  favorites: Record<string, true> | Record<string, boolean>;
+  /** мапа улюблених: id -> true */
+  favorites: Readonly<Record<string, boolean>>;
   onToggleFavorite: (id: string) => void;
   canLoadMore: boolean;
   onLoadMore: () => void;
@@ -23,14 +24,13 @@ export default function CardsGrid({
 }: Props) {
   return (
     <div className={css.cards}>
-      {campers.map((camper) => (
+      {campers.map((camper, i) => (
         <CamperCard
           key={camper.id}
           camper={camper}
-          isFavorite={Boolean(
-            (favorites as Record<string, boolean>)[camper.id]
-          )}
+          isFavorite={!!favorites[camper.id]}
           onToggleFavorite={onToggleFavorite}
+          lcp={i === 0}
         />
       ))}
 

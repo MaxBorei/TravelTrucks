@@ -11,12 +11,12 @@
   --button-hover: #b42318;
   --rating: #ffc531;
 
-  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-sans:
+    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --fw-regular: 400;
   --fw-medium: 500;
   --fw-semibold: 600;
 }
-
 
 html,
 body {
@@ -52,4 +52,3 @@ button {
   margin: 0;
   padding: 0;
 }
-

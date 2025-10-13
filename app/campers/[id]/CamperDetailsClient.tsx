@@ -62,7 +62,6 @@ export default function CamperDetailsClient({ id, camper }: Props) {
     { k: "Consumption", v: camper.consumption ?? "" },
   ].filter((d) => d.v);
 
-  // перші 4 фото однакової ширини в ряд
   const gallery = (camper.gallery ?? []).slice(0, 3);
 
   return (
@@ -146,9 +145,9 @@ export default function CamperDetailsClient({ id, camper }: Props) {
           )}
         </div>
 
-        <aside className={css.rightCol}>
+        <div className={css.rightCol}>
           <BookingForm camperId={id} />
-        </aside>
+        </div>
       </div>
     </div>
   );

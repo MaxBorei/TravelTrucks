@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation";
 import css from "./Header.module.css";
 
 export default function Header() {
-  const pathname = usePathname(); 
+  const pathname = usePathname();
 
   return (
     <header className={css.header}>
@@ -24,6 +24,7 @@ export default function Header() {
               <Link
                 href="/"
                 className={`${css.link} ${pathname === "/" ? css.active : ""}`}
+                prefetch={false}
               >
                 Home
               </Link>
@@ -32,6 +33,7 @@ export default function Header() {
               <Link
                 href="/catalog"
                 className={`${css.link} ${pathname === "/catalog" ? css.active : ""}`}
+                prefetch={false}
               >
                 Catalog
               </Link>
