@@ -52,7 +52,7 @@ export default function CamperCard({
   const topFeatures = sortByPriority(buildFeatureFlags(camper)).slice(0, 5);
 
   return (
-    <section className={css.card}>
+    <li className={css.card}>
       <Image
         src={camper.gallery?.[0]?.thumb || "/Picture.jpg"}
         alt={camper.name}
@@ -150,6 +150,6 @@ export default function CamperCard({
           Show more
         </Link>
       </div>
-    </section>
+    </li>
   );
 }

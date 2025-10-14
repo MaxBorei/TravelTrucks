@@ -23,7 +23,7 @@ export default function CardsGrid({
   isFetching = false,
 }: Props) {
   return (
-    <div className={css.cards}>
+    <ul className={css.cards}>
       {campers.map((camper, i) => (
         <CamperCard
           key={camper.id}
@@ -44,6 +44,6 @@ export default function CardsGrid({
           {isFetching ? "Loading…" : "Load more"}
         </button>
       )}
-    </div>
+    </ul>
   );
 }

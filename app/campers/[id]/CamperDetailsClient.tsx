@@ -95,7 +95,7 @@ export default function CamperDetailsClient({ id, camper }: Props) {
           </div>
           <p className={css.price}>€{camper.price.toFixed(2)}</p>
         </div>
-        {/* Gallery — 4 однакові зображення в ряд */}
+        {/* Gallery — 3 однакові зображення в ряд */}
         <div className={css.gallery}>
           {gallery.map((g, i) => (
             <Image

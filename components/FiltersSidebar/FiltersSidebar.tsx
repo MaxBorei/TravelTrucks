@@ -97,101 +97,109 @@ export default function FiltersSidebar({ onApply, onReset }: Props) {
       {/* Vehicle equipment */}
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Vehicle equipment</h4>
-        <div className={css.filterOptions}>
+        <ul className={css.filterOptions}>
           {equipment.map(({ key, label, iconKey }) => {
             const active = filtersDraft.filters.includes(key);
             const iconId = getIconId(iconKey);
+
             return (
-              <button
-                type="button"
-                key={key}
-                onClick={() => toggleEquipment(key)}
-                className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
-                aria-pressed={active}
-              >
-                <svg className={css.icon} aria-hidden="true">
-                  <use href={`/sprite.svg#${iconId}`} />
-                </svg>
-                {label}
-              </button>
+              <li key={key}>
+                <button
+                  type="button"
+                  onClick={() => toggleEquipment(key)}
+                  className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
+                  aria-pressed={active}
+                >
+                  <svg className={css.icon} aria-hidden="true">
+                    <use href={`/sprite.svg#${iconId}`} />
+                  </svg>
+                  {label}
+                </button>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
 
       {/* Transmission */}
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Transmission</h4>
-        <div className={css.filterOptions}>
+        <ul className={css.filterOptions}>
           {transmissions.map(({ key, label, iconKey }) => {
             const active = filtersDraft.transmission === key;
             const iconId = getIconId(iconKey);
+
             return (
-              <button
-                type="button"
-                key={key}
-                onClick={() => setTransmission(key)}
-                className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
-                aria-pressed={active}
-              >
-                <svg className={css.icon} aria-hidden="true">
-                  <use href={`/sprite.svg#${iconId}`} />
-                </svg>
-                {label}
-              </button>
+              <li key={key}>
+                <button
+                  type="button"
+                  onClick={() => setTransmission(key)}
+                  className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
+                  aria-pressed={active}
+                >
+                  <svg className={css.icon} aria-hidden="true">
+                    <use href={`/sprite.svg#${iconId}`} />
+                  </svg>
+                  {label}
+                </button>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
 
       {/* Engine type */}
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Engine type</h4>
-        <div className={css.filterOptions}>
+        <ul className={css.filterOptions}>
           {engines.map(({ key, label, iconKey }) => {
             const active = filtersDraft.engine === key;
             const iconId = getIconId(iconKey);
+
             return (
-              <button
-                type="button"
-                key={key}
-                onClick={() => setEngine(key)}
-                className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
-                aria-pressed={active}
-              >
-                <svg className={css.icon} aria-hidden="true">
-                  <use href={`/sprite.svg#${iconId}`} />
-                </svg>
-                {label}
-              </button>
+              <li key={key}>
+                <button
+                  type="button"
+                  onClick={() => setEngine(key)}
+                  className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
+                  aria-pressed={active}
+                >
+                  <svg className={css.icon} aria-hidden="true">
+                    <use href={`/sprite.svg#${iconId}`} />
+                  </svg>
+                  {label}
+                </button>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
 
       {/* Vehicle type */}
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Vehicle type</h4>
-        <div className={css.filterOptions}>
+        <ul className={css.filterOptions}>
           {vehicleTypes.map(({ key, label, iconKey }) => {
             const active = filtersDraft.vehicleType === key;
             const iconId = getIconId(iconKey);
+
             return (
-              <button
-                type="button"
-                key={key}
-                onClick={() => setVehicleType(key)}
-                className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
-                aria-pressed={active}
-              >
-                <svg className={css.icon} aria-hidden="true">
-                  <use href={`/sprite.svg#${iconId}`} />
-                </svg>
-                {label}
-              </button>
+              <li key={key}>
+                <button
+                  type="button"
+                  onClick={() => setVehicleType(key)}
+                  className={`${css.filterBtn} ${active ? css.activeFilter : ""}`}
+                  aria-pressed={active}
+                >
+                  <svg className={css.icon} aria-hidden="true">
+                    <use href={`/sprite.svg#${iconId}`} />
+                  </svg>
+                  {label}
+                </button>
+              </li>
             );
           })}
-        </div>
+        </ul>
       </div>
 
       {/* Apply / Reset */}
