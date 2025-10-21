@@ -1,4 +1,4 @@
-import type { Camper, EquipmentKey } from "@/types/types";
+import type { Camper, EquipmentKey } from "@/lib/types/types";
 
 export type FeatureKey = EquipmentKey | "transmission" | "engine" | "radio";
 export type FeatureFlag = { key: FeatureKey; label: string; value: boolean };

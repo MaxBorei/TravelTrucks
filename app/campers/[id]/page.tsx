@@ -1,6 +1,6 @@
 import Container from "@/components/Container/Container";
 import CamperDetailsClient from "./CamperDetailsClient";
-import type { Camper } from "@/types/types";
+import type { Camper } from "@/lib/types/types";
 import { getCamperByIdServer } from "@/lib/api/serverApi";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";

@@ -1,4 +1,4 @@
-import type { UpstreamReview } from "@/types/types";
+import type { UpstreamReview } from "@/lib/types/types";
 
 // Середній рейтинг + кількість відгуків (вже є)
 export function getAverageRating(

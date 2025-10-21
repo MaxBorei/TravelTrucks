@@ -11,7 +11,7 @@ import type {
   Transmission,
   EquipmentKey,
   CampersQuery,
-} from "@/types/types";
+} from "@/lib/types/types";
 
 export function useCampersQuery(
   filtersApplied: {

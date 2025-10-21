@@ -7,7 +7,7 @@ import FeaturePills from "@/components/FeaturePills/FeaturePills";
 import ReviewsList from "@/components/ReviewsList/ReviewsList";
 import VehicleDetails from "@/components/VehicleDetails/VehicleDetails";
 import BookingForm from "@/components/BookingForm/BookingForm";
-import type { Camper, EquipmentKey } from "@/types/types";
+import type { Camper, EquipmentKey } from "@/lib/types/types";
 import { getAverageRating } from "@/lib/utils/rating";
 
 type Tab = "features" | "reviews";

@@ -3,7 +3,7 @@ import type {
   Paginated,
   Camper,
   BookingRequest,
-} from "@/types/types";
+} from "@/lib/types/types";
 import { client } from "./api";
 
 /** Список кемперів (клієнт → наш Next API) */

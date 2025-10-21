@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { nextServer } from "@/lib/api/api";
-import type { Camper } from "@/types/types";
+import type { Camper } from "@/lib/types/types";
 import type { AxiosError } from "axios";
 
 type Params = { id: string };

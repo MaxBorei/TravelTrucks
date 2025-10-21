@@ -1,6 +1,6 @@
 "use client";
 
-import type { Camper } from "@/types/types";
+import type { Camper } from "@/lib/types/types";
 import css from "./ReviewsList.module.css";
 
 import StarRatingSprite from "@/components/StarFills/StarFills";

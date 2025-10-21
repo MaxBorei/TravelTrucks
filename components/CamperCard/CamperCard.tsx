@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import css from "./CamperCard.module.css";
 
-import type { Camper } from "@/types/types";
+import type { Camper } from "@/lib/types/types";
 import { buildFeatureFlags, type FeatureFlag } from "@/lib/utils/features";
 import { getIconId } from "@/lib/constants/iconMap";
 

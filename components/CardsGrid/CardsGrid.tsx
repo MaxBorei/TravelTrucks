@@ -2,7 +2,7 @@
 
 import css from "./CardsGrid.module.css";
 import CamperCard from "@/components/CamperCard/CamperCard";
-import type { Camper } from "@/types/types";
+import type { Camper } from "@/lib/types/types";
 
 type Props = {
   campers: Camper[];

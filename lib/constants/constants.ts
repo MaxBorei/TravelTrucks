@@ -4,7 +4,7 @@ import {
   Form,
   Option,
   Transmission,
-} from "@/types/types";
+} from "@/lib/types/types";
 
 export const EQUIPMENT = [
   { key: "AC", label: "AC", iconKey: "ac" },

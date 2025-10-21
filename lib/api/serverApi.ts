@@ -1,4 +1,4 @@
-import type { Camper } from "@/types/types";
+import type { Camper } from "@/lib/types/types";
 import { BASE, nextServer } from "./api";
 
 export function upstreamUrl(path: string, search?: string): string {
@@ -8,6 +8,6 @@ export function upstreamUrl(path: string, search?: string): string {
 }
 
 export async function getCamperByIdServer(id: string): Promise<Camper> {
-  const { data } = await nextServer.get<Camper>(`/campers/${(id)}`);
+  const { data } = await nextServer.get<Camper>(`/campers/${id}`);
   return data;
 }

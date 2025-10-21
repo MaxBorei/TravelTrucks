@@ -7,11 +7,11 @@ import type {
   Form,
   EquipmentKey,
   Camper,
-} from "@/types/types";
+} from "@/lib/types/types";
 
 export type FiltersState = {
   location: string;
-  filters: EquipmentKey[];         
+  filters: EquipmentKey[];
   transmission: Transmission | null;
   engine: Engine | null;
   vehicleType: Form | null;
@@ -101,7 +101,8 @@ export const useNoteStore = create<Store>()(
           },
         })),
 
-      applyFilters: () => set((s) => ({ filtersApplied: { ...s.filtersDraft } })),
+      applyFilters: () =>
+        set((s) => ({ filtersApplied: { ...s.filtersDraft } })),
       resetFilters: () =>
         set(() => ({
           filtersDraft: { ...emptyFilters },
@@ -140,7 +141,8 @@ export const useNoteStore = create<Store>()(
           const matchVehicleType = vt ? c.form === vt : true;
 
           const matchEquipment = f.filters.every(
-            (key: EquipmentKey) => (c as Record<EquipmentKey, boolean>)[key] === true
+            (key: EquipmentKey) =>
+              (c as Record<EquipmentKey, boolean>)[key] === true
           );
 
           return (

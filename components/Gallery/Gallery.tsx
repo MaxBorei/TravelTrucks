@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import type { Camper } from "@/types/types";
+import type { Camper } from "@/lib/types/types";
 import css from "./Gallery.module.css";
 
 type Props = { camper: Camper };
@@ -12,7 +12,13 @@ export default function Gallery({ camper }: Props) {
 
   return (
     <div className={css.root}>
-      <Image className={css.main} src={src} alt={camper.name} width={888} height={380} />
+      <Image
+        className={css.main}
+        src={src}
+        alt={camper.name}
+        width={888}
+        height={380}
+      />
       <div className={css.thumbs}>
         {(camper.gallery ?? []).slice(1, 4).map((g, idx) => (
           <Image

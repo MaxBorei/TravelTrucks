@@ -3,7 +3,12 @@
 import { useEffect } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useNoteStore } from "@/lib/stores/noteStore";
-import type { EquipmentKey, Transmission, Engine, Form } from "@/types/types";
+import type {
+  EquipmentKey,
+  Transmission,
+  Engine,
+  Form,
+} from "@/lib/types/types";
 
 /** type guards */
 const isTransmission = (v: string): v is Transmission =>

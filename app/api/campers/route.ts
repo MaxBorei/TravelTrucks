@@ -7,7 +7,7 @@ import type {
   Transmission,
   Engine,
   Form,
-} from "@/types/types";
+} from "@/lib/types/types";
 
 /* ---- query only for filtering & pagination ---- */
 function parseQuery(sp: URLSearchParams) {
@@ -58,19 +58,23 @@ export async function GET(req: NextRequest) {
     const all: Camper[] = Array.isArray(data?.items)
       ? data.items
       : Array.isArray(data)
-      ? data
-      : [];
+        ? data
+        : [];
 
     const filtered = all.filter((c) => {
-      if (q.location && !c.location?.toLowerCase().includes(q.location.toLowerCase())) return false;
+      if (
+        q.location &&
+        !c.location?.toLowerCase().includes(q.location.toLowerCase())
+      )
+        return false;
       if (q.transmission && c.transmission !== q.transmission) return false;
       if (q.engine && c.engine !== q.engine) return false;
-      if (q.vehicleType && (c.form ?? "").toString().trim() !== q.vehicleType) return false;
+      if (q.vehicleType && (c.form ?? "").toString().trim() !== q.vehicleType)
+        return false;
       if (!matchesEquipment(c, q.filters)) return false;
       return true;
     });
 
-  
     const total = filtered.length;
     const pages = Math.max(1, Math.ceil(total / q.limit));
     const start = (q.page - 1) * q.limit;
