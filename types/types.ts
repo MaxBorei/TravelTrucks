@@ -1,17 +1,17 @@
-export type Transmission = 'automatic' | 'manual';
-export type Engine = 'diesel' | 'petrol' | 'hybrid';
-export type Form = 'panelTruck' | 'fullyIntegrated' | 'alcove';
+export type Transmission = "automatic" | "manual";
+export type Engine = "diesel" | "petrol" | "hybrid";
+export type Form = "panelTruck" | "fullyIntegrated" | "alcove";
 
 export type EquipmentKey =
-  | 'AC'
-  | 'kitchen'
-  | 'bathroom'
-  | 'TV'
-  | 'radio'
-  | 'refrigerator'
-  | 'microwave'
-  | 'gas'
-  | 'water';
+  | "AC"
+  | "kitchen"
+  | "bathroom"
+  | "TV"
+  | "radio"
+  | "refrigerator"
+  | "microwave"
+  | "gas"
+  | "water";
 
 export interface CamperGalleryItem {
   thumb: string;
@@ -20,7 +20,7 @@ export interface CamperGalleryItem {
 
 export interface UpstreamReview {
   reviewer_name?: string;
-  reviewer_rating: number; 
+  reviewer_rating: number;
   comment?: string;
 }
 
@@ -28,7 +28,7 @@ export interface Camper {
   id: string;
   name: string;
   price: number;
-  rating: number;           
+  rating: number;
   location: string;
   description: string;
   form?: Form | string;
@@ -60,12 +60,12 @@ export interface CampersQuery {
   page?: number;
   limit?: number;
   location?: string;
-  transmission?: Transmission | '';
-  engine?: Engine | '';
-  vehicleType?: Form | '';     
-  filters?: EquipmentKey[];    
-  sort?: 'price' | 'rating' | '';
-  order?: 'asc' | 'desc';
+  transmission?: Transmission | "";
+  engine?: Engine | "";
+  vehicleType?: Form | "";
+  filters?: EquipmentKey[];
+  sort?: "price" | "rating" | "";
+  order?: "asc" | "desc";
 }
 
 export interface Paginated<T> {
@@ -80,10 +80,16 @@ export type BookingRequest = {
   camperId: string;
   name: string;
   email: string;
-  date: string;     
+  date: string;
   comment?: string;
 };
 
 export interface BookingResponse {
   ok: true;
 }
+
+export type Option<K extends string> = {
+  key: K;
+  label: string;
+  iconKey: string;
+};

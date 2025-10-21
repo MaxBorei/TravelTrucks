@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import css from "./CamperDetailsClient.module.css";
 import FeaturePills from "@/components/FeaturePills/FeaturePills";
@@ -31,10 +31,7 @@ type Props = {
 export default function CamperDetailsClient({ id, camper }: Props) {
   const [tab, setTab] = useState<Tab>("features");
 
-  const { average, count } = useMemo(
-    () => getAverageRating(camper.reviews, 1),
-    [camper.reviews]
-  );
+  const { average, count } = getAverageRating(camper.reviews, 1);
   const avgRating = count > 0 ? average : (camper.rating ?? 0);
 
   // для бейдджів фіч

@@ -1,12 +1,14 @@
 "use client";
-
-import { useMemo } from "react";
+import {
+  EQUIPMENT,
+  TRANSMISSIONS,
+  ENGINES,
+  VEHICLE_TYPES,
+} from "@/lib/constants/constants";
 import css from "./FiltersSidebar.module.css";
 
 import { useNoteStore } from "@/lib/stores/noteStore";
 import { getIconId } from "@/lib/constants/iconMap";
-
-import type { EquipmentKey, Transmission, Engine, Form } from "@/types/types";
 
 type Props = {
   onApply: () => void;
@@ -14,61 +16,13 @@ type Props = {
 };
 
 export default function FiltersSidebar({ onApply, onReset }: Props) {
-  // ===== Zustand (работаем с "draft")
+  // ===== Zustand (працюємо з "draft")
   const filtersDraft = useNoteStore((s) => s.filtersDraft);
   const setLocation = useNoteStore((s) => s.setLocation);
   const toggleEquipment = useNoteStore((s) => s.toggleEquipment);
   const setTransmission = useNoteStore((s) => s.setTransmission);
   const setEngine = useNoteStore((s) => s.setEngine);
   const setVehicleType = useNoteStore((s) => s.setVehicleType);
-
-  const equipment = useMemo(
-    () =>
-      [
-        { key: "AC", label: "AC", iconKey: "ac" },
-        { key: "kitchen", label: "Kitchen", iconKey: "kitchen" },
-        { key: "bathroom", label: "Bathroom", iconKey: "bathroom" },
-        { key: "TV", label: "TV", iconKey: "tv" },
-        { key: "refrigerator", label: "Fridge", iconKey: "refrigerator" },
-        { key: "microwave", label: "Microwave", iconKey: "microwave" },
-        { key: "gas", label: "Gas", iconKey: "gas" },
-        { key: "water", label: "Water", iconKey: "water" },
-      ] as { key: EquipmentKey; label: string; iconKey: string }[],
-    []
-  );
-
-  const transmissions = useMemo(
-    () =>
-      [
-        { key: "automatic", label: "Automatic", iconKey: "automatic" },
-        { key: "manual", label: "Manual", iconKey: "manual" },
-      ] as { key: Transmission; label: string; iconKey: string }[],
-    []
-  );
-
-  const engines = useMemo(
-    () =>
-      [
-        { key: "diesel", label: "Diesel", iconKey: "diesel" },
-        { key: "petrol", label: "Petrol", iconKey: "petrol" },
-        { key: "hybrid", label: "Hybrid", iconKey: "hybrid" },
-      ] as { key: Engine; label: string; iconKey: string }[],
-    []
-  );
-
-  const vehicleTypes = useMemo(
-    () =>
-      [
-        { key: "panelTruck", label: "Van", iconKey: "panelTruck" },
-        {
-          key: "fullyIntegrated",
-          label: "Fully Integrated",
-          iconKey: "fullyIntegrated",
-        },
-        { key: "alcove", label: "Alcove", iconKey: "alcove" },
-      ] as { key: Form; label: string; iconKey: string }[],
-    []
-  );
 
   return (
     <div className={css.filters}>
@@ -98,7 +52,7 @@ export default function FiltersSidebar({ onApply, onReset }: Props) {
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Vehicle equipment</h4>
         <ul className={css.filterOptions}>
-          {equipment.map(({ key, label, iconKey }) => {
+          {EQUIPMENT.map(({ key, label, iconKey }) => {
             const active = filtersDraft.filters.includes(key);
             const iconId = getIconId(iconKey);
 
@@ -125,7 +79,7 @@ export default function FiltersSidebar({ onApply, onReset }: Props) {
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Transmission</h4>
         <ul className={css.filterOptions}>
-          {transmissions.map(({ key, label, iconKey }) => {
+          {TRANSMISSIONS.map(({ key, label, iconKey }) => {
             const active = filtersDraft.transmission === key;
             const iconId = getIconId(iconKey);
 
@@ -152,7 +106,7 @@ export default function FiltersSidebar({ onApply, onReset }: Props) {
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Engine type</h4>
         <ul className={css.filterOptions}>
-          {engines.map(({ key, label, iconKey }) => {
+          {ENGINES.map(({ key, label, iconKey }) => {
             const active = filtersDraft.engine === key;
             const iconId = getIconId(iconKey);
 
@@ -179,7 +133,7 @@ export default function FiltersSidebar({ onApply, onReset }: Props) {
       <div className={css.filterBlock}>
         <h4 className={css.filterTitle}>Vehicle type</h4>
         <ul className={css.filterOptions}>
-          {vehicleTypes.map(({ key, label, iconKey }) => {
+          {VEHICLE_TYPES.map(({ key, label, iconKey }) => {
             const active = filtersDraft.vehicleType === key;
             const iconId = getIconId(iconKey);
 

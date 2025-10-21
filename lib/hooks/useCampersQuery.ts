@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getCampers } from "@/lib/api/clientApi";
 import type {
@@ -10,10 +10,8 @@ import type {
   Paginated,
   Transmission,
   EquipmentKey,
+  CampersQuery,
 } from "@/types/types";
-
-// ← тип запроса берём из функции, чтобы 1-в-1 совпадал с clientApi
-type CamperQuery = Parameters<typeof getCampers>[0];
 
 export function useCampersQuery(
   filtersApplied: {
@@ -21,24 +19,21 @@ export function useCampersQuery(
     transmission: Transmission | null;
     engine: Engine | null;
     vehicleType: Form | null;
-    filters: EquipmentKey[]; // ВАЖНО: EquipmentKey[], не string[]
+    filters: EquipmentKey[];
   },
   page: number,
   setPage: (p: number) => void,
   limit: number
 ) {
-  const queryParams: CamperQuery = useMemo(() => {
-    const d = filtersApplied;
-    return {
-      page,
-      limit,
-      location: d.location || "",
-      transmission: (d.transmission ?? "") as Transmission | "",
-      engine: (d.engine ?? "") as Engine | "",
-      vehicleType: (d.vehicleType ?? "") as Form | "",
-      filters: d.filters.slice() as EquipmentKey[],
-    };
-  }, [filtersApplied, page, limit]);
+  const queryParams: CampersQuery = {
+    page,
+    limit,
+    location: filtersApplied.location ?? "",
+    transmission: filtersApplied.transmission ?? "",
+    engine: filtersApplied.engine ?? "",
+    vehicleType: filtersApplied.vehicleType ?? "",
+    filters: [...(filtersApplied.filters ?? [])],
+  };
 
   const { data, isLoading, isError, isFetching } = useQuery<Paginated<Camper>>({
     queryKey: ["campers", queryParams] as const,
@@ -51,7 +46,6 @@ export function useCampersQuery(
   const [acc, setAcc] = useState<Camper[]>([]);
   const initialFixApplied = useRef(false);
 
-  // фикс "page > totalPages" строго >
   useEffect(() => {
     if (initialFixApplied.current) return;
     if (!data) return;
@@ -81,5 +75,14 @@ export function useCampersQuery(
     setPage(page + 1);
   };
 
-  return { data, isLoading, isError, isFetching, campers, canLoadMore, loadMore, resetAcc: () => setAcc([]) };
+  return {
+    data,
+    isLoading,
+    isError,
+    isFetching,
+    campers,
+    canLoadMore,
+    loadMore,
+    resetAcc: () => setAcc([]),
+  };
 }

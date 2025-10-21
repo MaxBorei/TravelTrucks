@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import css from "./BookingDateField.module.css";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,11 +8,9 @@ import "react-datepicker/dist/react-datepicker.css";
 export default function BookingDateField() {
   const [value, setValue] = useState<Date | null>(null);
   const WEEKDAYS_3 = ["SUN", "MON", "TUE", "WED", "THE", "FRI", "SAT"];
-  const today = useMemo(() => {
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d;
-  }, []);
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  const today = d;
 
   return (
     <DatePicker
