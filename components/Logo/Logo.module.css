@@ -1,20 +1,31 @@
 .logo {
-    display: inline-flex;
-    align-items: baseline;
-    line-height: 1;
-    font-size: 24px;
-    font-family: var(--font-sans);
-    letter-spacing: 0;
-    gap: 0;
+  display: inline-flex;
+  align-items: baseline;
+  line-height: 1;
+  font-size: 24px;
+  font-family: var(--font-sans);
+  letter-spacing: 0;
+  gap: 0;
 }
 
 .partA {
-    color: var(--main);
-    font-weight: 700;
+  color: var(--main);
+  font-weight: 700;
 }
 
 .partB {
-    color: var(--text);
-    font-weight: 800;
+  color: var(--text);
+  font-weight: 800;
 }
 
+@media (max-width: 768px) {
+  .logo {
+    font-size: 22px;
+  }
+}
+
+@media (max-width: 375px) {
+  .logo {
+    font-size: 18px;
+  }
+}
