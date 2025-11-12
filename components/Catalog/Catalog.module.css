@@ -1,7 +1,14 @@
 /* ============ LAYOUT ============ */
 .catalog {
-    display: flex;
-    align-items: flex-start;
-    gap: 64px;
-    padding: 48px 0 52px;
+  display: flex;
+  align-items: flex-start;
+  gap: 64px;
+  padding: 48px 0 52px;
+}
+
+@media (max-width: 768px) {
+  .catalog {
+    flex-direction: column;
+    gap: 12px;
+  }
 }

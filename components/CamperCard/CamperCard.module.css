@@ -209,3 +209,15 @@
   color: var(--button);
   fill: currentColor;
 }
+
+@media (max-width: 375px) {
+  .card {
+    width: 343px;
+    height: 600px;
+    flex-direction: column;
+  }
+
+  .muted {
+    display: none;
+  }
+}
