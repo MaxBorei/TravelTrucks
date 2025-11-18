@@ -203,3 +203,42 @@
     font-size: 20px;
   }
 }
+
+/* ---------- MOBILE 375px ---------- */
+@media (max-width: 375px) {
+  .detailsWrapper {
+    padding: 24px 0 40px;
+  }
+
+  /* Галерея в колонку */
+  .gallery {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .galleryImg {
+    width: 100%;
+    height: 220px; /* або auto, якщо хочеш зберегти пропорції */
+    border-radius: 8px;
+  }
+
+  /* Трохи дрібніші шрифти */
+  .title {
+    font-size: 18px;
+  }
+
+  .muted,
+  .location {
+    font-size: 14px;
+  }
+
+  /* Контентна колонка */
+  .contentRow {
+    gap: 20px;
+  }
+
+  .rightCol {
+    padding: 20px 16px;
+  }
+}
