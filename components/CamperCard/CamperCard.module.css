@@ -210,7 +210,7 @@
   fill: currentColor;
 }
 
-@media (max-width: 375px) {
+@media (max-width: 768px) {
   .card {
     width: 343px;
     height: 600px;
